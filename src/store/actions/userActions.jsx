@@ -52,3 +52,30 @@ export const asyncLogoutUser = () => async (dispatch, getState) => {
     console.log(error.response.data);
   }
 };
+
+export const asyncForgetPassword = (email) => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.post("/user/send-mail", { email });
+    dispatch({
+      type: "URL_SEND_SUCCESS",
+      payload: data,
+    });
+    return data;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncChangePassword =
+  (userId, password) => async (dispatch, getState) => {
+    try {
+      const { data } = await axios.post(
+        `/user/forget-password-link/${userId}`,
+        { password }
+      );
+      console.log(data);
+      dispatch();
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
