@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { asyncRegisterUser } from "../../store/actions/userActions";
 
 const Register = () => {
-  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -18,7 +21,7 @@ const Register = () => {
       email,
       password,
     };
-    console.log(newUser);
+    dispatch(asyncRegisterUser(newUser));
   };
 
   return (

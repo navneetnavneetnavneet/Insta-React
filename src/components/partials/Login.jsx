@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { asyncLoginUser } from "../../store/actions/userActions";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const User = {
+    const user = {
       username,
       password,
     };
-    console.log(User);
+    dispatch(asyncLoginUser(user));
     setUsername("");
     setPassword("");
   };
@@ -45,7 +49,7 @@ const Login = () => {
         </Link>
         <span>
           Don't have an account ?{" "}
-          <Link to="/" class="text-blue-500">
+          <Link to="/register" class="text-blue-500">
             Sign Up
           </Link>
         </span>
