@@ -43,3 +43,12 @@ export const asyncLoginUser =
     }
   };
 
+export const asyncLogoutUser = () => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.get("/user/logout");
+    console.log(data);
+    dispatch(remove());
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
