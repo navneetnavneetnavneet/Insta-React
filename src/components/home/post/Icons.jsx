@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { asyncLikePost } from "../../../store/actions/postActions";
+import {
+  asyncLikePost,
+  asyncSavePost,
+} from "../../../store/actions/postActions";
 
 const Icons = ({ likes, postId }) => {
   const dispatch = useDispatch();
@@ -11,7 +14,7 @@ const Icons = ({ likes, postId }) => {
     <div className="options w-full px-4 flex justify-between items-center text-[1.4rem] text-white">
       <div className="flex gap-3 mt-2">
         <i
-        onClick={() => dispatch(asyncLikePost(postId, user._id))}
+          onClick={() => dispatch(asyncLikePost(postId))}
           className={`${
             likes.indexOf(user._id) === -1
               ? "ri-heart-3-line"
@@ -22,6 +25,7 @@ const Icons = ({ likes, postId }) => {
         <i className="ri-share-circle-line"></i>
       </div>
       <i
+        onClick={() => dispatch(asyncSavePost(postId))}
         className={`${
           user.savePosts.indexOf(postId) === -1
             ? "ri-bookmark-line"
