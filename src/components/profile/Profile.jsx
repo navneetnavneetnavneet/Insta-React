@@ -1,18 +1,24 @@
-import React from 'react'
-import Nav from './Nav'
-import User from './user/User'
-import Post from './post/Post'
-import Icons from './Icons'
+import React from "react";
+import Nav from "./Nav";
+import User from "./user/User";
+import Post from "./post/Post";
+import Icons from "./Icons";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-  return (
-    <div className='w-full min-h-screen bg-zinc-900 text-white'>
-      <Nav />
-      <User />
-      <Icons />
-      <Post />
-    </div>
-  )
-}
+  const { user } = useSelector((state) => state.userReducer);
+  console.log(user);
 
-export default Profile
+  return (
+    user && (
+      <div className="w-full min-h-screen bg-zinc-900 text-white">
+        <Nav username={user.username} />
+        <User user={user} />
+        <Icons />
+        <Post posts={user.posts} />
+      </div>
+    )
+  );
+};
+
+export default Profile;

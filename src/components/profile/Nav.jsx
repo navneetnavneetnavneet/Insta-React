@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { asyncLogoutUser } from "../../store/actions/userActions";
 
-const Nav = () => {
+const Nav = (props) => {
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
@@ -13,7 +13,7 @@ const Nav = () => {
   return (
     <div>
       <div className="w-full px-4 py-4 flex items-center justify-between">
-        <h4 className="text-lg">username</h4>
+        <h4 className="text-lg">{props?.username}</h4>
         <div className="flex items-center gap-5">
           <i onClick={logoutHandler} className="ri-logout-box-line"></i>
           <Link to="/upload">

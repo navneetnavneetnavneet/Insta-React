@@ -1,15 +1,22 @@
 import React from "react";
 
-const Post = () => {
+const Post = ({ posts }) => {
   return (
     <div className="flex flex-wrap gap-1 mt-1">
-      <div className="w-[32.2%] h-32 overflow-hidden flex-shrink-0">
-        <img
-          className="w-full h-full object-cover"
-          src="https://images.unsplash.com/photo-1719430074740-a5ee49a67d45?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-        />
-      </div>
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <div className="w-[32.2%] h-32 overflow-hidden flex-shrink-0">
+            <img
+              key={post._id}
+              className="w-full h-full object-cover"
+              src={post.image.url}
+              alt=""
+            />
+          </div>
+        ))
+      ) : (
+        <p className="text-sm text-center mt-10 text-zinc-600">no post yet.</p>
+      )}
     </div>
   );
 };

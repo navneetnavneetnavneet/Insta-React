@@ -1,13 +1,13 @@
 import React from 'react'
-import UserDets from './userdets/UserDets'
+import UserDets from './UserDets'
 import Button from './Button'
 import Username from "./Username"
 
-const User = () => {
+const User = ({user}) => {
   return (
     <div>
-      <UserDets />
-      <Username />
+      <UserDets user={user} />
+      <Username fullName={user.fullName} />
       <Button />
     </div>
   )

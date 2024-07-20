@@ -40,7 +40,7 @@ const MainRoutes = () => {
         <Route path="/edit" element={<Edit />} />
       </Routes>
 
-      {/* <BottomNav /> */}
+      <BottomNav />
     </div>
   );
 };

@@ -1,21 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const EditDetails = () => {
+const EditDetails = ({ user }) => {
   const imageRef = useRef(null);
   const navigate = useNavigate();
 
-  const props = {
-    profileImage: "http://localhost:3000/images/uploads/dimage.jpg",
-    username: "john",
-    name: "John Deo",
-    bio: "hello everyone",
-  };
-
-  const [profileImage, setProfileImage] = useState(props.profileImage);
-  const [username, setUsername] = useState(props.username);
-  const [name, setName] = useState(props.name);
-  const [bio, setBio] = useState(props.bio);
+  const [profileImage, setProfileImage] = useState(user.profileImage.url);
+  const [username, setUsername] = useState(user.username);
+  const [fullName, setFullName] = useState(user.fullName);
+  const [bio, setBio] = useState(user.bio);
 
   const imageHandler = () => {
     imageRef.current.click();
@@ -34,7 +27,7 @@ const EditDetails = () => {
     const updatedUser = {
       profileImage,
       username,
-      name,
+      fullName,
       bio,
     };
     console.log(updatedUser);
@@ -75,8 +68,8 @@ const EditDetails = () => {
             className="w-full text-lg mt-2 px-4 py-2 border boder-zinc-800 rounded-md bg-transparent"
           />
           <input
-            onChange={(e) => setName(e.target.value)}
-            value={name}
+            onChange={(e) => setFullName(e.target.value)}
+            value={fullName}
             type="text"
             placeholder="Name"
             className="w-full text-lg mt-2 px-4 py-2 border boder-zinc-800 rounded-md bg-transparent"
