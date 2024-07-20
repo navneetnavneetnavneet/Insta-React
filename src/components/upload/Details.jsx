@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { asyncUploadPost } from "../../store/actions/postActions";
 
 const Details = () => {
   const imageRef = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [image, setImage] = useState("");
   const [caption, setCaption] = useState("");
@@ -13,10 +16,12 @@ const Details = () => {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedImage = URL.createObjectURL(e.target.files[0]);
-      setImage(selectedImage);
-    }
+    // if (e.target.files && e.target.files[0]) {
+    //   const selectedImage = URL.createObjectURL(e.target.files[0]);
+    //   setImage(selectedImage);
+    // }
+
+    setImage(e.target.files[0]);
   };
 
   const submitHandler = (e) => {
@@ -26,8 +31,7 @@ const Details = () => {
       image,
       caption,
     };
-    console.log(uploadPost);
-
+    dispatch(asyncUploadPost(uploadPost));
     navigate("/");
   };
 
@@ -54,7 +58,12 @@ const Details = () => {
           placeholder="Write a caption..."
           className="w-full text-lg mt-2 px-4 py-2 resize-none border boder-zinc-800 rounded-md bg-transparent"
         ></textarea>
-        <button className="w-full text-lg mt-2 px-4 py-2 border boder-zinc-800 rounded-md bg-blue-600">
+        <button
+          disabled={image == "" ? true : false}
+          className={`w-full text-lg mt-2 px-4 py-2 border boder-zinc-800 rounded-md ${
+            image != "" ? "bg-blue-600" : "bg-blue-600 opacity-30"
+          }`}
+        >
           Post
         </button>
       </form>

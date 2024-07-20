@@ -22,14 +22,14 @@ const MainRoutes = () => {
 
   useEffect(() => {
     dispatch(asyncLoadUser());
-
-    isAuthenticated && navigate("/");
-    !isAuthenticated && navigate("/login");
-  }, [isAuthenticated]);
-
-  useEffect(() => {
     dispatch(asyncGetAllPost());
-  }, [asyncGetAllPost]);
+
+    if (isAuthenticated) {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  }, [isAuthenticated, dispatch]);
 
   return (
     <div>
