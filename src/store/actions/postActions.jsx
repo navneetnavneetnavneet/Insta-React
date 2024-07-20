@@ -14,8 +14,9 @@ export const asyncGetAllPost = () => async (dispatch, getState) => {
 
 export const asyncUploadPost =
   ({ image, caption }) =>
-  async () => {
+  async (dispatch, getState) => {
     try {
+      const posts = getState().postReducer;
       const { data } = await axios.post(
         "/post/upload",
         {
@@ -28,9 +29,21 @@ export const asyncUploadPost =
           },
         }
       );
-      asyncGetAllPost();
-      asyncLoadUser();
+      //   console.log(data);
+      dispatch(asyncGetAllPost([...posts, data.post]));
     } catch (error) {
       console.log(error.response.data);
     }
   };
+
+export const asyncLikePost = (postId, userId) => async (dispatch, getState) => {
+  try {
+    const posts = getState().postReducer;
+    console.log(posts);
+    const { data } = await axios.get(`/post/like/${postId}`, { userId });
+    console.log(data);
+    dispatch(asyncGetAllPost());
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
