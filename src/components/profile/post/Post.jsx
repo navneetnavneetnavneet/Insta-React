@@ -5,9 +5,8 @@ const Post = ({ posts }) => {
     <div className="flex flex-wrap gap-1 mt-1">
       {posts.length > 0 ? (
         posts.map((post) => (
-          <div className="w-[32.2%] h-32 overflow-hidden flex-shrink-0">
+          <div key={post._id} className="w-[32.2%] h-32 overflow-hidden flex-shrink-0">
             <img
-              key={post._id}
               className="w-full h-full object-cover"
               src={post.image.url}
               alt=""
@@ -15,7 +14,7 @@ const Post = ({ posts }) => {
           </div>
         ))
       ) : (
-        <p className="text-sm text-center mt-10 text-zinc-600">no post yet.</p>
+        <p className="w-full text-sm text-center mt-20 text-zinc-400">no post yet.</p>
       )}
     </div>
   );

@@ -1,14 +1,46 @@
-import React from 'react'
-import Input from './Input'
-import User from './User'
+import React, { useEffect, useState } from "react";
+import User from "./User";
+import { asyncSearchUser } from "../../store/actions/userActions";
+import { useDispatch } from "react-redux";
 
 const Search = () => {
-  return (
-    <div className='w-full min-h-screen bg-zinc-900 px-4 py-4 text-white'>
-        <Input />
-        <User />
-    </div>
-  )
-}
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+  const [users, setUsers] = useState([]);
 
-export default Search
+  const getUsers = async () => {
+    if (username.trim() !== "") {
+      try {
+        const data = await dispatch(asyncSearchUser(username));
+        setUsers(data);
+      } catch (error) {
+        console.log("Failed to fetch users : ", error);
+      }
+    } else {
+      setUsers([]);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, [username]);
+
+  return (
+    <div className="w-full min-h-screen bg-zinc-900 px-4 py-4 text-white">
+      <div className="border-2 border-zinc-700 flex items-center justify-between px-2 py-1 rounded-md">
+        <i className="ri-search-line"></i>
+        <input
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+          className="ml-2 text-lg w-full bg-transparent outline-none text-zinc-400"
+          type="text"
+          placeholder="search username"
+        />
+      </div>
+      {users.length > 0 &&
+        users.map((user) => <User key={user._id} user={user} />)}
+    </div>
+  );
+};
+
+export default Search;

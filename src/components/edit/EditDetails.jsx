@@ -1,11 +1,14 @@
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { asyncEditUser } from "../../store/actions/userActions";
 
 const EditDetails = ({ user }) => {
   const imageRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [profileImage, setProfileImage] = useState(user.profileImage.url);
+  const [profileImage, setProfileImage] = useState(user.profileImage?.url);
   const [username, setUsername] = useState(user.username);
   const [fullName, setFullName] = useState(user.fullName);
   const [bio, setBio] = useState(user.bio);
@@ -15,10 +18,12 @@ const EditDetails = ({ user }) => {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedImage = URL.createObjectURL(e.target.files[0]);
-      setProfileImage(selectedImage);
-    }
+    // if (e.target.files && e.target.files[0]) {
+    //   const selectedImage = URL.createObjectURL(e.target.files[0]);
+    //   setProfileImage(selectedImage);
+    // }
+
+    setProfileImage(e.target.files[0]);
   };
 
   const submitHandler = (e) => {
@@ -30,15 +35,14 @@ const EditDetails = ({ user }) => {
       fullName,
       bio,
     };
-    console.log(updatedUser);
-
+    dispatch(asyncEditUser(updatedUser));
     navigate("/profile");
   };
 
   return (
     <>
       <div className="flex flex-col items-center gap-2 mt-20">
-        <div className="profileImage w-20 h-20 bg-sky-100 rounded-full overflow-hidden">
+        <div className="profileImage w-20 h-20 rounded-full overflow-hidden">
           <img
             className="w-full h-full object-cover"
             src={profileImage}

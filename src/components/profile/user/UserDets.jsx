@@ -1,30 +1,33 @@
 import React from "react";
 
-const UserDets = ({user}) => {
+const UserDets = ({ user }) => {
+  
   return (
-    <div className="w-full px-4 flex items-center justify-between text-white">
-      <div className="w-[20vw] h-[20vw] rounded-full bg-sky-100 overflow-hidden">
-        <img
-          className="w-full h-full object-cover"
-          src={user.profileImage.url}
-          alt=""
-        />
+    user && (
+      <div className="w-full px-4 flex items-center justify-between text-white">
+        <div className="w-[20vw] h-[20vw] rounded-full overflow-hidden">
+          <img
+            className="w-full h-full object-cover"
+            src={user.profileImage.url}
+            alt=""
+          />
+        </div>
+        <div className="flex items-center justify-center gap-10">
+          <div className="flex flex-col items-center">
+            <h3>{user.posts.length}</h3>
+            <h3>Post</h3>
+          </div>
+          <div className="flex flex-col items-center">
+            <h3>{user.followers.length}</h3>
+            <h3>Follower</h3>
+          </div>
+          <div className="flex flex-col items-center">
+            <h3>{user.followings.length}</h3>
+            <h3>Following</h3>
+          </div>
+        </div>
       </div>
-      <div className="flex items-center justify-center gap-10">
-        <div className="flex flex-col items-center">
-          <h3>{user.posts.length}</h3>
-          <h3>Post</h3>
-        </div>
-        <div className="flex flex-col items-center">
-          <h3>{user.followers.length}</h3>
-          <h3>Follower</h3>
-        </div>
-        <div className="flex flex-col items-center">
-          <h3>{user.followings.length}</h3>
-          <h3>Following</h3>
-        </div>
-      </div>
-    </div>
+    )
   );
 };
 

@@ -7,7 +7,7 @@ const User = ({user}) => {
   return (
     <div>
       <UserDets user={user} />
-      <Username fullName={user.fullName} />
+      <Username fullName={user.fullName} bio={user.bio} />
       <Button />
     </div>
   )

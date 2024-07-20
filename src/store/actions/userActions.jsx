@@ -79,3 +79,40 @@ export const asyncChangePassword =
       console.log(error.response.data);
     }
   };
+
+export const asyncEditUser =
+  ({ profileImage, username, fullName, bio }) =>
+  async () => {
+    try {
+      const { data } = await axios.post(
+        "/user/edit",
+        {
+          profileImage,
+          username,
+          fullName,
+          bio,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      dispatch(asyncLoadUser());
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+export const asyncSearchUser = (username) => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.post(`/user/search/${username}`);
+    dispatch({
+      type: "SEARCH_USER",
+      payload: data.users,
+    });
+    return data.users;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
