@@ -12,6 +12,7 @@ import BottomNav from "../components/partials/BottomNav";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { asyncLoadUser } from "../store/actions/userActions";
+import { asyncGetAllPost } from "../store/actions/postActions";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -25,6 +26,10 @@ const MainRoutes = () => {
     isAuthenticated && navigate("/");
     !isAuthenticated && navigate("/login");
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    dispatch(asyncGetAllPost());
+  }, [asyncGetAllPost]);
 
   return (
     <div>

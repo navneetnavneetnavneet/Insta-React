@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const User = ({user}) => {
+const User = ({ user }) => {
   return (
-    <div className="text-white flex items-center gap-2 mt-5">
-      <div className="image w-[11vw] h-[11vw] rounded-full bg-sky-100 overflow-hidden">
+    <Link className="text-white flex items-center gap-2 mt-5">
+      <div className="image w-[11vw] h-[11vw] rounded-full overflow-hidden">
         <img
           className="w-full h-full object-cover"
           src={user.profileImage.url}
@@ -14,7 +15,7 @@ const User = ({user}) => {
         <h3>{user.username}</h3>
         <h4 className="text-xs opacity-30 leading-none">{user.fullName}</h4>
       </div>
-    </div>
+    </Link>
   );
 };
 
