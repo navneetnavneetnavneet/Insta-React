@@ -32,7 +32,7 @@ const FindUserProfile = () => {
     getFindUserProfile();
   }, [username]);
 
-  console.log(finduser);
+  // console.log(finduser);
 
   return finduser ? (
     <div className="w-full min-h-screen bg-zinc-900 text-white">

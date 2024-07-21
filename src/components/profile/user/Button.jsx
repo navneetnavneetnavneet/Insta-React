@@ -1,10 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { asyncFollowAndFollowing } from "../../../store/actions/userActions";
 
 const Button = ({ userId }) => {
+  const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.userReducer.user);
-  
+
   return loggedInUser._id == userId ? (
     <div className="mt-5 px-4">
       <Link to="/edit" className="px-6 py-2 bg-zinc-700 text-xs rounded-md">
@@ -13,7 +15,10 @@ const Button = ({ userId }) => {
     </div>
   ) : (
     <div className="mt-5 px-4 flex gap-2">
-      <Link to="/" className="px-6 py-2 bg-blue-600 text-xs rounded-md">
+      <Link
+        onClick={() => dispatch(asyncFollowAndFollowing(userId))}
+        className="px-4 py-2 bg-blue-500 text-xs rounded-md"
+      >
         {loggedInUser.followings.indexOf(userId) === -1
           ? "Follow"
           : "Following"}

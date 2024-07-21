@@ -16,7 +16,7 @@ const FindUserPost = () => {
   const getFindUserPost = async () => {
     try {
       const data = await dispatch(asyncFindUserPost(userId));
-      console.log(data);
+      // console.log(data);
       setFinduser(data);
     } catch (error) {
       console.log("Error : ", error);
