@@ -82,7 +82,7 @@ export const asyncChangePassword =
 
 export const asyncEditUser =
   ({ profileImage, username, fullName, bio }) =>
-  async () => {
+  async (dispatch, getState) => {
     try {
       const { data } = await axios.post(
         "/user/edit",
@@ -112,6 +112,49 @@ export const asyncSearchUser = (username) => async (dispatch, getState) => {
       payload: data.users,
     });
     return data.users;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncFindUserProfile =
+  (username) => async (dispatch, getState) => {
+    try {
+      const { data } = await axios.get(`/user/profile/${username}`);
+      // console.log(data);
+      dispatch({
+        type: "Find_User_Profile",
+        payload: data.finduser,
+      });
+      return data.finduser;
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+export const asyncFindUserPost = (userId) => async (dispatch, getState) => {
+  try {
+    const {data} = await axios.get(`/user/post/${userId}`);
+    // console.log(data);
+    dispatch({
+      type: "Find_User_Post",
+      payload: data.finduser,
+    });
+    return data.finduser;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncFindUserSavePost = (userId) => async (dispatch, getState) => {
+  try {
+    const {data} = await axios.get(`/user/savepost/${userId}`);
+    // console.log(data);
+    dispatch({
+      type: "Find_User_Save_Post",
+      payload: data.finduser,
+    });
+    return data.finduser;
   } catch (error) {
     console.log(error.response.data);
   }

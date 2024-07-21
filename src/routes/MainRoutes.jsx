@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { asyncLoadUser } from "../store/actions/userActions";
 import { asyncGetAllPost } from "../store/actions/postActions";
+import FindUserProfile from "../components/FindUserProfile";
+import FindUserPost from "../components/FindUserPost";
+import FindUserSavePost from "../components/FindUserSavePost";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -43,6 +46,10 @@ const MainRoutes = () => {
         <Route path="/upload" element={<Upload />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit" element={<Edit />} />
+
+        <Route path="/user/profile/:username" element={<FindUserProfile />} />
+        <Route path="/user/post/:userId" element={<FindUserPost />} />
+        <Route path="/user/save_post/:userId" element={<FindUserSavePost />} />
       </Routes>
 
       <BottomNav />

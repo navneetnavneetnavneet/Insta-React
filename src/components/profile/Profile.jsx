@@ -7,14 +7,13 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.userReducer);
-  console.log(user);
 
   return (
     user && (
       <div className="w-full min-h-screen bg-zinc-900 text-white">
         <Nav username={user.username} />
         <User user={user} />
-        <Icons />
+        <Icons userId={user._id} />
         <Post posts={user.posts} />
       </div>
     )
