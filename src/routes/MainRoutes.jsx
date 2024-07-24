@@ -16,6 +16,7 @@ import { asyncGetAllPost } from "../store/actions/postActions";
 import FindUserProfile from "../components/FindUserProfile";
 import FindUserPost from "../components/FindUserPost";
 import FindUserSavePost from "../components/FindUserSavePost";
+import Comment from "../components/comment/Comment";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -50,6 +51,10 @@ const MainRoutes = () => {
         <Route path="/user/profile/:username" element={<FindUserProfile />} />
         <Route path="/user/post/:userId" element={<FindUserPost />} />
         <Route path="/user/save_post/:userId" element={<FindUserSavePost />} />
+
+        <Route path="/post/comment/:postId" element={<Comment />} />
+
+
       </Routes>
 
       <BottomNav />

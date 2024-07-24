@@ -17,6 +17,7 @@ export const asyncUploadPost =
   async (dispatch, getState) => {
     try {
       const posts = getState().postReducer;
+      console.log(posts);
       const { data } = await axios.post(
         "/post/upload",
         {
@@ -56,3 +57,14 @@ export const asyncSavePost = (postId) => async (dispatch, getState) => {
     console.log(error.response.data);
   }
 };
+
+export const asyncSendComment =
+  (postId, comment) => async (dispatch, getState) => {
+    try {
+      const { data } = await axios.post(`/post/comment/${postId}`, { comment });
+      // console.log(data);
+      dispatch(asyncGetAllPost());
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };

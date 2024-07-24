@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const { posts } = useSelector((state) => state.postReducer);
-  console.log(posts);
+  // console.log(posts);
 
   return (
     <div className="w-full min-h-screen pb-20 bg-zinc-900">
