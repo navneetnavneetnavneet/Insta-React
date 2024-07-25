@@ -56,6 +56,7 @@ const MainRoutes = () => {
         <Route path="/post/comment/:postId" element={<Comment />} />
 
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:userId" element={<ChatPage />} />
       </Routes>
 
       <BottomNav />

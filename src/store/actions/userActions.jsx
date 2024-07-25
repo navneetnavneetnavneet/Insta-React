@@ -160,11 +160,22 @@ export const asyncFindUserSavePost = (userId) => async (dispatch, getState) => {
   }
 };
 
-export const asyncFollowAndFollowing = (userId) => async (dispatch, getState) => {
+export const asyncFollowAndFollowing =
+  (userId) => async (dispatch, getState) => {
+    try {
+      const { data } = await axios.get(`/user/follow/${userId}`);
+      dispatch(asyncLoadUser());
+      console.log(data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+export const asyncGetAllUser = () => async (dispatch, getState) => {
   try {
-    const {data} = await axios.get(`/user/follow/${userId}`);
+    const { data } = await axios.get("/user/chat/allusers");
     dispatch(asyncLoadUser());
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error.response.data);
   }
