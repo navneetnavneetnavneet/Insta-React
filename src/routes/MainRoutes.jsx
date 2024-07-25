@@ -17,6 +17,7 @@ import FindUserProfile from "../components/FindUserProfile";
 import FindUserPost from "../components/FindUserPost";
 import FindUserSavePost from "../components/FindUserSavePost";
 import Comment from "../components/comment/Comment";
+import ChatPage from "../components/ChatPage";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const MainRoutes = () => {
 
         <Route path="/post/comment/:postId" element={<Comment />} />
 
-
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
 
       <BottomNav />

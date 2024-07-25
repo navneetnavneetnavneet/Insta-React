@@ -23,7 +23,10 @@ const Icons = ({ likes, postId }) => {
               : "ri-heart-3-fill text-red-600"
           }`}
         ></i>
-        <i onClick={() => navigate(`/post/comment/${postId}`)} className="ri-chat-3-line"></i>
+        <i
+          onClick={() => navigate(`/post/comment/${postId}`)}
+          className="ri-chat-3-line"
+        ></i>
         <i className="ri-share-circle-line"></i>
       </div>
       <i

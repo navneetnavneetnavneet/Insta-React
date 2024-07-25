@@ -18,7 +18,8 @@ const Comment = () => {
   const post = posts && posts.find((p) => p._id === postId);
 
   return (
-    post && (
+    post &&
+    user && (
       <div className="w-full h-screen bg-white">
         <div className="w-full h-[85vh] overflow-y-auto">
           <h1 className="text-xl font-bold text-center border-b py-2">
@@ -65,7 +66,7 @@ const Comment = () => {
             onClick={sendComment}
             className="py-2 px-8 rounded-3xl bg-blue-500 text-2xl font-semibold text-white"
           >
-            <i class="ri-arrow-up-line"></i>
+            <i className="ri-arrow-up-line"></i>
           </button>
         </div>
       </div>
