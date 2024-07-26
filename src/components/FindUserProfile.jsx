@@ -35,7 +35,7 @@ const FindUserProfile = () => {
   // console.log(finduser);
 
   return finduser ? (
-    <div className="w-full min-h-screen bg-zinc-900 text-white">
+    <div className="w-full min-h-screen bg-zinc-900 text-white relative overflow-x-hidden">
       <Nav username={finduser.username} />
       <User user={finduser} />
       <Icons userId={finduser._id} />

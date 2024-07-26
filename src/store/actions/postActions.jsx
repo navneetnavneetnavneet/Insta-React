@@ -30,7 +30,6 @@ export const asyncUploadPost =
           },
         }
       );
-      //   console.log(data);
       dispatch(asyncGetAllPost([...posts, data.post]));
     } catch (error) {
       console.log(error.response.data);

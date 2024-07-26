@@ -29,7 +29,7 @@ const FindUserPost = () => {
 
   return (
     finduser && (
-      <div className="w-full min-h-screen bg-zinc-900 text-white pb-20">
+      <div className="w-full min-h-screen bg-zinc-900 text-white pb-20 relative overflow-x-hidden">
         <Nav username={finduser.username} />
         <User user={finduser} />
         <Icons userId={finduser._id} />
