@@ -16,7 +16,7 @@ const ChatPage = () => {
     getAllUser();
   }, []);
 
-  console.log(users);
+//   console.log(users);
 
   return (
     users && (
