@@ -6,7 +6,9 @@ export const asyncGetAllPost = () => async (dispatch, getState) => {
   try {
     const { data } = await axios.get("/post");
     console.log(data);
-    dispatch(allPosts(data.posts));
+    if (data) {
+      dispatch(allPosts(data.posts));
+    }
   } catch (error) {
     console.log(error.response.data);
   }
@@ -17,7 +19,6 @@ export const asyncUploadPost =
   async (dispatch, getState) => {
     try {
       const posts = getState().postReducer;
-      console.log(posts);
       const { data } = await axios.post(
         "/post/upload",
         {
@@ -30,7 +31,7 @@ export const asyncUploadPost =
           },
         }
       );
-      dispatch(asyncGetAllPost([...posts, data.post]));
+      dispatch(asyncGetAllPost());
     } catch (error) {
       console.log(error.response.data);
     }
@@ -41,6 +42,7 @@ export const asyncLikePost = (postId) => async (dispatch, getState) => {
     const { data } = await axios.get(`/post/like/${postId}`);
     console.log(data);
     dispatch(asyncGetAllPost());
+    dispatch(asyncLoadUser());
   } catch (error) {
     console.log(error.response.data);
   }

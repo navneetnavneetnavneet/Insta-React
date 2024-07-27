@@ -24,14 +24,14 @@ const Details = () => {
     setImage(e.target.files[0]);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const uploadPost = {
       image,
       caption,
     };
-    dispatch(asyncUploadPost(uploadPost));
+    await dispatch(asyncUploadPost(uploadPost));
     navigate("/");
   };
 

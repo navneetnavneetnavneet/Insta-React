@@ -8,10 +8,11 @@ const EditDetails = ({ user }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [profileImage, setProfileImage] = useState(user.profileImage?.url);
+  const [profileImage, setProfileImage] = useState(user.profileImage.url);
   const [username, setUsername] = useState(user.username);
   const [fullName, setFullName] = useState(user.fullName);
   const [bio, setBio] = useState(user.bio);
+
 
   const imageHandler = () => {
     imageRef.current.click();
@@ -26,7 +27,7 @@ const EditDetails = ({ user }) => {
     setProfileImage(e.target.files[0]);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const updatedUser = {
@@ -35,7 +36,7 @@ const EditDetails = ({ user }) => {
       fullName,
       bio,
     };
-    dispatch(asyncEditUser(updatedUser));
+    await dispatch(asyncEditUser(updatedUser));
     navigate("/profile");
   };
 

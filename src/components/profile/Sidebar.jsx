@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Sidebar = ({ userId, width, setWidth }) => {
   return (
     <div
-      className={`absolute top-0 -right-[${width}] duration-1000 w-[100%] h-screen z-[100] bg-emerald-600 text-white`}
+      className={`absolute top-0 -right-[100%] duration-1000 w-[100%] h-screen z-[100] bg-zinc-700 text-white`}
     >
       <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-200">
         <i

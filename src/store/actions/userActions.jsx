@@ -98,6 +98,7 @@ export const asyncEditUser =
           },
         }
       );
+      
       dispatch(asyncLoadUser());
     } catch (error) {
       console.log(error.response.data);
