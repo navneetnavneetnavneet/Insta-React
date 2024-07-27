@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { asyncLogoutUser } from "../../store/actions/userActions";
 
 const Sidebar = ({ userId, width, setWidth }) => {
+  const dispatch = useDispatch();
+
   return (
     <div
-      className={`absolute top-0 -right-[100%] duration-1000 w-[100%] h-screen z-[100] bg-zinc-700 text-white`}
+      className={`absolute top-0 -right-[${width}] duration-1000 w-[100%] h-screen z-[100] bg-zinc-700 text-white`}
     >
       <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-200">
         <i
@@ -50,7 +54,7 @@ const Sidebar = ({ userId, width, setWidth }) => {
             <h5>Setting</h5>
           </div>
         </Link>
-        <Link to="/logout">
+        <Link onClick={() => dispatch(asyncLogoutUser())}>
           <div className="flex items-center gap-5 px-4 py-4 border-b border-zinc-200">
             <i className="ri-logout-box-line"></i>
             <h5>Logout</h5>
