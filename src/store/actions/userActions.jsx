@@ -1,5 +1,5 @@
 import axios from "../../utils/axios";
-import { load, remove, setUsers } from "../reducers/userSlice";
+import { load, remove, setChatUser, setUsers } from "../reducers/userSlice";
 
 export const asyncLoadUser = () => async (dispatch, getState) => {
   try {
@@ -173,6 +173,16 @@ export const asyncGetAllUser = () => async (dispatch, getState) => {
     const { data } = await axios.get("/user/chat/allusers");
     dispatch(asyncLoadUser());
     return data;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncGetChatUser = (id) => async (dispatch, getState) => {
+  try {
+    const {data} = await axios.get(`/user/chat/${id}`);
+    // console.log(data);
+    dispatch(setChatUser(data));
   } catch (error) {
     console.log(error.response.data);
   }
