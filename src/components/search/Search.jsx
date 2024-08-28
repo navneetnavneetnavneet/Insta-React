@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
 import User from "./User";
 import { asyncSearchUser } from "../../store/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsers } from "../../store/reducers/userSlice";
 
 const Search = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
-  const [users, setUsers] = useState([]);
+  const { users } = useSelector((state) => state.userReducer);
 
   const getUsers = async () => {
     if (username.trim() !== "") {
-      try {
-        const data = await dispatch(asyncSearchUser(username));
-        setUsers(data);
-      } catch (error) {
-        console.log("Failed to fetch users : ", error);
-      }
+      dispatch(asyncSearchUser(username));
     } else {
-      setUsers([]);
+      dispatch(setUsers(null));
     }
   };
 
@@ -37,8 +33,7 @@ const Search = () => {
           placeholder="search username"
         />
       </div>
-      {users.length > 0 &&
-        users.map((user) => <User key={user._id} user={user} />)}
+      {users && users.map((user) => <User key={user._id} user={user} />)}
     </div>
   );
 };

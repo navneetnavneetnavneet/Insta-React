@@ -13,7 +13,6 @@ const EditDetails = ({ user }) => {
   const [fullName, setFullName] = useState(user.fullName);
   const [bio, setBio] = useState(user.bio);
 
-
   const imageHandler = () => {
     imageRef.current.click();
   };

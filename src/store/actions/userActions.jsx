@@ -1,5 +1,5 @@
 import axios from "../../utils/axios";
-import { load, remove } from "../reducers/userSlice";
+import { load, remove, setUsers } from "../reducers/userSlice";
 
 export const asyncLoadUser = () => async (dispatch, getState) => {
   try {
@@ -98,7 +98,7 @@ export const asyncEditUser =
           },
         }
       );
-      
+
       dispatch(asyncLoadUser());
     } catch (error) {
       console.log(error.response.data);
@@ -108,11 +108,7 @@ export const asyncEditUser =
 export const asyncSearchUser = (username) => async (dispatch, getState) => {
   try {
     const { data } = await axios.post(`/user/search/${username}`);
-    dispatch({
-      type: "SEARCH_USER",
-      payload: data.users,
-    });
-    return data.users;
+    dispatch(setUsers(data.users));
   } catch (error) {
     console.log(error.response.data);
   }
