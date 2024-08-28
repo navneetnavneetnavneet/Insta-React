@@ -9,7 +9,6 @@ const Home = () => {
   const [reversePosts, setReversePosts] = useState([]);
   
   const { posts } = useSelector((state) => state.postReducer);
-  console.log(posts);
 
   useEffect(() => {
     setReversePosts([...posts].reverse());

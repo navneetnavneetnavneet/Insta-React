@@ -11,10 +11,10 @@ const Nav = ({username, userId}) => {
     dispatch(asyncLogoutUser());
   };
 
-  const [width, setWidth] = useState("100%");
+  const [width, setWidth] = useState("0%");
 
   const menuIconHandler = () => {
-    setWidth("0%");
+    setWidth("100%");
   };
 
   return (

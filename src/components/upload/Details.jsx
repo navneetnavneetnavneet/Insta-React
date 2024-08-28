@@ -45,7 +45,7 @@ const Details = () => {
           select picture
         </button>
       </div>
-      <form onSubmit={submitHandler} class="w-full px-6 py-3 mt-10">
+      <form onSubmit={submitHandler} className="w-full px-6 py-3 mt-10">
         <input
           hidden
           onChange={handleImageChange}
