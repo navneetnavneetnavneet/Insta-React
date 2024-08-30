@@ -18,7 +18,7 @@ import FindUserPost from "../components/FindUserPost";
 import FindUserSavePost from "../components/FindUserSavePost";
 import Comment from "../components/comment/Comment";
 import ChatPage from "../components/ChatPage";
-import ChatMessage from "../components/ChatMessage";
+import ChatMessage from "../components/chat_message/ChatMessage";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
