@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncSendMessage } from "../../store/actions/messageActions";
 
 const MessageInput = () => {
+  const dispatch = useDispatch();
   const [message, setMessage] = useState("");
+
+  const { chatUser } = useSelector((state) => state.userReducer);
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
-    console.log(message);
+    dispatch(asyncSendMessage(chatUser?._id, message));
     setMessage("");
   };
+
   return (
     <div className="w-full mt-2 flex items-center justify-between">
       <form

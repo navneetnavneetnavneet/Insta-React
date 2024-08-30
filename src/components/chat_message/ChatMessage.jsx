@@ -16,10 +16,10 @@ const ChatMessage = () => {
 
   useEffect(() => {
     dispatch(asyncGetChatUser(userId));
-    dispatch(asyncGetChatUserAllMessages(chatUser?._id));
+    dispatch(asyncGetChatUserAllMessages(userId));
 
     return () => dispatch(setChatUser(null));
-  }, [userId]);
+  }, [userId, dispatch]);
 
   return (
     chatUser && (
