@@ -1,10 +1,12 @@
 import React from "react";
 
-const Message = () => {
+const Message = ({ message }) => {
   return (
-    <div className="incomingMessage px-4 py-2 mb-1 bg-red-300 w-fit rounded-md text-white text-lg font-semibold">
-      hello incoming
-    </div>
+    message && (
+      <div className="message px-4 py-2 mb-1 bg-red-300 ml-auto w-fit rounded-md text-white text-lg font-semibold">
+        {message.message}
+      </div>
+    )
   );
 };
 

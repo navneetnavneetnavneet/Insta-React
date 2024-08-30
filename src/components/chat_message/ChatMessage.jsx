@@ -6,6 +6,7 @@ import { setChatUser } from "../../store/reducers/userSlice";
 import TopNav from "./TopNav";
 import MessageContainer from "./MessageContainer";
 import MessageInput from "./MessageInput";
+import { asyncGetChatUserAllMessages } from "../../store/actions/messageActions";
 
 const ChatMessage = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const ChatMessage = () => {
 
   useEffect(() => {
     dispatch(asyncGetChatUser(userId));
+    dispatch(asyncGetChatUserAllMessages(chatUser?._id));
 
     return () => dispatch(setChatUser(null));
   }, [userId]);
