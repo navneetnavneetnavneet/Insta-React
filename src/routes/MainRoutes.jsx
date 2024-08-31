@@ -19,12 +19,15 @@ import FindUserSavePost from "../components/FindUserSavePost";
 import Comment from "../components/comment/Comment";
 import ChatPage from "../components/ChatPage";
 import ChatMessage from "../components/chat_message/ChatMessage";
+import io from "socket.io-client";
+import { setSocket } from "../store/reducers/socketSlice";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector((state) => state.userReducer);
+  const { isAuthenticated, user } = useSelector((state) => state.userReducer);
+  const { socket } = useSelector((state) => state.socketReducer);
 
   useEffect(() => {
     dispatch(asyncLoadUser());
@@ -36,6 +39,18 @@ const MainRoutes = () => {
       navigate("/login");
     }
   }, [isAuthenticated, dispatch]);
+
+  // socket.io
+  useEffect(() => {
+    if (user) {
+      const socket = io("http://localhost:8080", {
+        query: {
+          userId: user._id,
+        },
+      });
+      dispatch(setSocket(socket));
+    }
+  }, [user]);
 
   return (
     <div>
