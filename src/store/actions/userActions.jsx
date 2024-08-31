@@ -171,8 +171,9 @@ export const asyncFollowAndFollowing =
 export const asyncGetAllUser = () => async (dispatch, getState) => {
   try {
     const { data } = await axios.get("/user/chat/allusers");
-    dispatch(asyncLoadUser());
-    return data;
+    dispatch(setUsers(data));
+    // dispatch(asyncLoadUser());
+    // return data;
   } catch (error) {
     console.log(error.response.data);
   }
@@ -180,7 +181,7 @@ export const asyncGetAllUser = () => async (dispatch, getState) => {
 
 export const asyncGetChatUser = (id) => async (dispatch, getState) => {
   try {
-    const {data} = await axios.get(`/user/chat/${id}`);
+    const { data } = await axios.get(`/user/chat/${id}`);
     // console.log(data);
     dispatch(setChatUser(data));
   } catch (error) {

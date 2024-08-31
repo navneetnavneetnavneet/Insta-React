@@ -12,7 +12,7 @@ const ChatMessage = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
 
-  const { chatUser } = useSelector((state) => state.userReducer);
+  const { chatUser, onlineUsers } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(asyncGetChatUser(userId));

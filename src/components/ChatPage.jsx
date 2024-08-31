@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { asyncGetAllUser } from "../store/actions/userActions";
 import { Link } from "react-router-dom";
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const [users, setusers] = useState([]);
-
-  const getAllUser = async () => {
-    const data = await dispatch(asyncGetAllUser());
-    setusers(data);
-  };
+  const { users, onlineUsers } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    getAllUser();
+    dispatch(asyncGetAllUser());
   }, []);
 
-//   console.log(users);
+  console.log(users);
 
   return (
     users && (
@@ -38,7 +33,15 @@ const ChatPage = () => {
               <h4 className="text-xl font-semibold leading-none">
                 {user.username}
               </h4>
-              <p className="text-sm font-semibold text-zinc-400">Active</p>
+              <p
+                className={`text-sm font-semibold ${
+                  onlineUsers.includes(user._id)
+                    ? "text-emerald-400"
+                    : "text-zinc-400"
+                }`}
+              >
+                {onlineUsers.includes(user._id) ? "Active" : "offline"}
+              </p>
             </div>
           </Link>
         ))}

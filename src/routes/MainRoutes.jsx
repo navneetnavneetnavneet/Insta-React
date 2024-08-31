@@ -21,6 +21,7 @@ import ChatPage from "../components/ChatPage";
 import ChatMessage from "../components/chat_message/ChatMessage";
 import io from "socket.io-client";
 import { setSocket } from "../store/reducers/socketSlice";
+import { setOnlineUsers } from "../store/reducers/userSlice";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -49,6 +50,10 @@ const MainRoutes = () => {
         },
       });
       dispatch(setSocket(socket));
+
+      socket.on("getOnlineUsers", (onlineUsers) => {
+        dispatch(setOnlineUsers(onlineUsers));
+      });
     }
   }, [user]);
 

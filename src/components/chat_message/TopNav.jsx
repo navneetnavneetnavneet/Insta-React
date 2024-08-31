@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const TopNav = ({ chatUser }) => {
   const navigate = useNavigate();
+
+  const { onlineUsers } = useSelector((state) => state.userReducer);
 
   return (
     chatUser && (
@@ -12,12 +15,19 @@ const TopNav = ({ chatUser }) => {
             onClick={() => navigate(-1)}
             className="ri-arrow-left-line text-xl font-semibold"
           ></i>
-          <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden">
-            <img
-              className="w-full h-full object-cover"
-              src={chatUser.profileImage.url}
-              alt=""
-            />
+          <div className="relative">
+            <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden">
+              <img
+                className="w-full h-full object-cover"
+                src={chatUser.profileImage.url}
+                alt=""
+              />
+            </div>
+            <span
+              className={`absolute w-[3vw] h-[3vw] bottom-0 right-0 rounded-full z-[10] ${
+                onlineUsers.includes(chatUser?._id) ? "bg-emerald-500" : ""
+              } `}
+            ></span>
           </div>
           <div>
             <h4 className="text-xl font-semibold leading-none">
