@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncGetAllUser } from "../store/actions/userActions";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ChatPage = () => {
-  const dispatch = useDispatch();
   const { users, onlineUsers } = useSelector((state) => state.userReducer);
-
-  useEffect(() => {
-    dispatch(asyncGetAllUser());
-  }, []);
-
-  console.log(users);
 
   return (
     users && (

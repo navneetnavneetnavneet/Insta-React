@@ -11,7 +11,7 @@ import Edit from "../components/edit/Edit";
 import BottomNav from "../components/partials/BottomNav";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { asyncLoadUser } from "../store/actions/userActions";
+import { asyncGetAllUser, asyncLoadUser } from "../store/actions/userActions";
 import { asyncGetAllPost } from "../store/actions/postActions";
 import FindUserProfile from "../components/FindUserProfile";
 import FindUserPost from "../components/FindUserPost";
@@ -33,6 +33,7 @@ const MainRoutes = () => {
   useEffect(() => {
     dispatch(asyncLoadUser());
     dispatch(asyncGetAllPost());
+    dispatch(asyncGetAllUser());
 
     if (isAuthenticated) {
       navigate("/");
@@ -54,8 +55,16 @@ const MainRoutes = () => {
       socket.on("getOnlineUsers", (onlineUsers) => {
         dispatch(setOnlineUsers(onlineUsers));
       });
+
+      // Clean up socket connection
+      return () => socket.close();
+    } else {
+      if (socket) {
+        socket.close();
+        dispatch(setSocket(null));
+      }
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <div>

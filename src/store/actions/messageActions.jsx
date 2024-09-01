@@ -6,7 +6,6 @@ export const asyncGetChatUserAllMessages =
     try {
       const { data } = await axios.get(`/chat/${id}`);
       dispatch(setMessages(data && data ? data : []));
-    //   console.log(data);
     } catch (error) {
       console.log(error.response.data);
     }

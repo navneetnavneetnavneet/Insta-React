@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 const Message = ({ message }) => {
   const { user } = useSelector((state) => state.userReducer);
+  const scroll = useRef();
+
+  useEffect(() => {
+    scroll.current.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
+  }, [message]);
 
   return (
     message && (
       <div
-        className={`${
+        style={
           message.senderId === user._id
-            ? "ml-auto bg-red-400"
-            : "mr-auto bg-emerald-400"
-        } message px-4 py-2 mb-1 w-fit rounded-md text-white text-lg font-semibold`}
+            ? {
+                background: `linear-gradient(to right, red, blue)`,
+                marginLeft: "auto",
+              }
+            : {
+                background: `linear-gradient(to right, blue, red)`,
+                marginRight: "auto",
+              }
+        }
+        ref={scroll}
+        className={`message px-4 py-2 mb-1 w-fit rounded-md text-white text-lg font-semibold`}
       >
         {message.message}
       </div>

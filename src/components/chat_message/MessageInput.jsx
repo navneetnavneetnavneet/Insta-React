@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncSendMessage } from "../../store/actions/messageActions";
+import { setMessages } from "../../store/reducers/messageSlice";
 
 const MessageInput = () => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
 
   const { chatUser } = useSelector((state) => state.userReducer);
+  const { messages } = useSelector((state) => state.messageReducer);
+  const { socket } = useSelector((state) => state.socketReducer);
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
     dispatch(asyncSendMessage(chatUser?._id, message));
     setMessage("");
   };
+
+  useEffect(() => {
+    sendMessageHandler;
+
+    socket?.on("newMessage", (newMessage) => {
+      dispatch(setMessages([...messages, newMessage]));
+    });
+  }, [messages, socket, setMessages]);
 
   return (
     <div className="w-full mt-2 flex items-center justify-between">

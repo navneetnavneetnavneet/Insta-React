@@ -19,6 +19,7 @@ export const userSlice = createSlice({
     remove: (state, actions) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.chatUser = null;
     },
     setUsers: (state, action) => {
       state.users = action.payload;
@@ -32,5 +33,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { load, remove, setUsers, setChatUser, setOnlineUsers } = userSlice.actions;
+export const { load, remove, setUsers, setChatUser, setOnlineUsers } =
+  userSlice.actions;
 export default userSlice.reducer;
