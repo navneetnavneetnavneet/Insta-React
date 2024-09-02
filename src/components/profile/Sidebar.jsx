@@ -8,7 +8,7 @@ const Sidebar = ({ userId, width, setWidth }) => {
 
   return (
     <div
-      className={`absolute top-0 -right-0 duration-700 w-[${width}] h-screen z-[100] bg-zinc-800 text-white`}
+      className={`absolute top-0 right-0 duration-700 w-[${width}] h-screen z-[100] bg-zinc-800 text-white`}
     >
       <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-200">
         <i

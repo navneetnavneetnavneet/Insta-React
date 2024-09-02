@@ -20,8 +20,10 @@ import Comment from "../components/comment/Comment";
 import ChatPage from "../components/ChatPage";
 import ChatMessage from "../components/chat_message/ChatMessage";
 import io from "socket.io-client";
-import { setSocket } from "../store/reducers/socketSlice";
+import { setSocket } from "../store/reducers/socketSlice"
 import { setOnlineUsers } from "../store/reducers/userSlice";
+import { asyncGetAllStories } from "../store/actions/storyActions";
+import StoryShow from "../components/StoryShow";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ const MainRoutes = () => {
     dispatch(asyncLoadUser());
     dispatch(asyncGetAllPost());
     dispatch(asyncGetAllUser());
+    dispatch(asyncGetAllStories());
 
     if (isAuthenticated) {
       navigate("/");
@@ -87,6 +90,8 @@ const MainRoutes = () => {
 
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chat/:userId" element={<ChatMessage />} />
+
+        <Route path="/story/user/:userId" element={<StoryShow />} />
       </Routes>
 
       <BottomNav />

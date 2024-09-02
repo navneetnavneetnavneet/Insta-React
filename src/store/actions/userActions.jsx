@@ -172,8 +172,6 @@ export const asyncGetAllUser = () => async (dispatch, getState) => {
   try {
     const { data } = await axios.get("/user/chat/allusers");
     dispatch(setUsers(data));
-    // dispatch(asyncLoadUser());
-    // return data;
   } catch (error) {
     console.log(error.response.data);
   }
