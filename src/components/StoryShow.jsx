@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const StoryShow = () => {
+  const navigate = useNavigate();
   const { userId } = useParams();
   const { stories } = useSelector((state) => state.storyReducer);
   const storyUser = stories && stories.find((s) => s.user._id === userId);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (storyUser) {
+      interval = setInterval(() => {
+        setProgress((prev) => prev + 1);
+      }, 30);
+
+      if (progress >= 100) {
+        setProgress(0);
+        if (currentIndex < storyUser.user.stories.length - 1) {
+          setCurrentIndex((prevIndex) => prevIndex + 1);
+        } else {
+          navigate("/");
+        }
+      }
+      return () => clearInterval(interval);
+    }
+  }, [currentIndex, progress, storyUser]);
 
   return (
     storyUser && (
@@ -31,13 +54,16 @@ const StoryShow = () => {
             </div>
           </div>
           <div className="w-full h-[4px] bg-zinc-600 absolute bottom-0 overflow-hidden">
-            <div className="w-[30%] h-full bg-white rounded-lg"></div>
+            <div
+              style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
+              className="h-full bg-white rounded-lg"
+            ></div>
           </div>
         </div>
         <div className="w-full h-screen overflow-hidden">
           <img
             className="w-full h-full object-cover"
-            src={storyUser.storyUrl?.url}
+            src={storyUser.user?.stories[currentIndex]?.storyUrl.url}
             alt=""
           />
         </div>
