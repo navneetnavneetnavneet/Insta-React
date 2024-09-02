@@ -30,6 +30,21 @@ const StoryShow = () => {
     }
   }, [currentIndex, progress, storyUser]);
 
+  const handlePreviousStroy = () => {
+    setProgress(0);
+    if (currentIndex > 0) {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
+  const handleNextStroy = () => {
+    if (currentIndex < storyUser.user.stories.length - 1) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     storyUser && (
       <div className="w-full h-screen relative">
@@ -67,6 +82,14 @@ const StoryShow = () => {
             alt=""
           />
         </div>
+        <div
+          onClick={handlePreviousStroy}
+          className="w-1/2 h-full absolute top-0 left-0"
+        ></div>
+        <div
+          onClick={handleNextStroy}
+          className="w-1/2 h-full opacity-30 absolute top-0 right-0"
+        ></div>
         <div className="flex gap-2 absolute  bottom-16 w-full px-4">
           <div className="w-full rounded-full bg-green border-2">
             <input
