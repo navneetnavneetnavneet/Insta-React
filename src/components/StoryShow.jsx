@@ -6,7 +6,12 @@ const StoryShow = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { stories } = useSelector((state) => state.storyReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const storyUser = stories && stories.find((s) => s.user._id === userId);
+
+  console.log(stories);
+  
+  
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -27,6 +32,8 @@ const StoryShow = () => {
         }
       }
       return () => clearInterval(interval);
+    } else {
+      navigate("/");
     }
   }, [currentIndex, progress, storyUser]);
 
@@ -34,7 +41,7 @@ const StoryShow = () => {
     setProgress(0);
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
-    }else {
+    } else {
       navigate("/");
     }
   };

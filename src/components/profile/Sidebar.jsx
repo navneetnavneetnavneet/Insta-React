@@ -36,6 +36,12 @@ const Sidebar = ({ userId, width, setWidth }) => {
             <h5>Edit</h5>
           </div>
         </Link>
+        <Link to="/story/upload">
+          <div className="flex items-center gap-5 px-4 py-4 border-b border-zinc-200">
+            <i className="ri-movie-2-line"></i>
+            <h5>Story</h5>
+          </div>
+        </Link>
         <Link to={`/user/save_post/${userId}`}>
           <div className="flex items-center gap-5 px-4 py-4 border-b border-zinc-200">
             <i className="ri-bookmark-line"></i>

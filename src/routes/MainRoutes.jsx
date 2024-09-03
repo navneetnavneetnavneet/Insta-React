@@ -21,10 +21,12 @@ import ChatPage from "../components/ChatPage";
 import ChatMessage from "../components/chat_message/ChatMessage";
 import io from "socket.io-client";
 import { setSocket } from "../store/reducers/socketSlice";
-import { setOnlineUsers } from "../store/reducers/userSlice";
+import { setOnlineUsers, setUsers } from "../store/reducers/userSlice";
 import { asyncGetAllStories } from "../store/actions/storyActions";
 import StoryShow from "../components/StoryShow";
 import UploadStory from "../components/upload_story/UploadStory";
+import { setStories } from "../store/reducers/storySlice";
+import { allPosts } from "../store/reducers/postSlice";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -44,6 +46,12 @@ const MainRoutes = () => {
     } else {
       navigate("/login");
     }
+
+    return () => {
+      dispatch(setStories([]));
+      dispatch(allPosts([]));
+      dispatch(setUsers([]));
+    };
   }, [isAuthenticated, dispatch]);
 
   // socket.io
