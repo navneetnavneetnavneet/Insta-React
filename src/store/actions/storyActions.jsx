@@ -10,3 +10,22 @@ export const asyncGetAllStories = () => async (dispatch, getState) => {
     console.log(error.response.data);
   }
 };
+
+export const asyncUploadStory =
+  ({ storyUrl }) =>
+  async (dispatch, getState) => {
+    try {
+      const { data } = await axios.post(
+        "/story/upload-story",
+        { storyUrl },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      dispatch(asyncGetAllStories());
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };

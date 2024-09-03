@@ -20,10 +20,11 @@ import Comment from "../components/comment/Comment";
 import ChatPage from "../components/ChatPage";
 import ChatMessage from "../components/chat_message/ChatMessage";
 import io from "socket.io-client";
-import { setSocket } from "../store/reducers/socketSlice"
+import { setSocket } from "../store/reducers/socketSlice";
 import { setOnlineUsers } from "../store/reducers/userSlice";
 import { asyncGetAllStories } from "../store/actions/storyActions";
 import StoryShow from "../components/StoryShow";
+import UploadStory from "../components/upload_story/UploadStory";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ const MainRoutes = () => {
         <Route path="/chat/:userId" element={<ChatMessage />} />
 
         <Route path="/story/user/:userId" element={<StoryShow />} />
+        <Route path="/story/upload" element={<UploadStory />} />
       </Routes>
 
       <BottomNav />

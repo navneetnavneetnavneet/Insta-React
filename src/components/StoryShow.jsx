@@ -34,6 +34,8 @@ const StoryShow = () => {
     setProgress(0);
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
+    }else {
+      navigate("/");
     }
   };
 
