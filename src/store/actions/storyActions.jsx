@@ -29,3 +29,13 @@ export const asyncUploadStory =
       console.log(error.response.data);
     }
   };
+
+export const asyncLikeStory = (id) => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.get(`/story/like/${id}`);
+    dispatch(asyncGetAllStories());
+    console.log(data);
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

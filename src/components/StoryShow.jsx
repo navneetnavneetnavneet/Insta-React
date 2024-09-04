@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { asyncLikeStory } from "../store/actions/storyActions";
 
 const StoryShow = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { userId } = useParams();
   const { stories } = useSelector((state) => state.storyReducer);
   const { user } = useSelector((state) => state.userReducer);
   const storyUser = stories && stories.find((s) => s.user._id === userId);
 
-  console.log(stories);
-  
-  
+  // console.log(stories);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -53,6 +53,8 @@ const StoryShow = () => {
       navigate("/");
     }
   };
+
+  let story = user && storyUser && storyUser.user?.stories[currentIndex];
 
   return (
     storyUser && (
@@ -108,7 +110,14 @@ const StoryShow = () => {
             />
           </div>
           <div className="text-white flex gap-1 items-center">
-            <i className="ri-heart-line text-3xl"></i>
+            <i
+              onClick={() => dispatch(asyncLikeStory(story._id))}
+              className={`${
+                story.likes.includes(user?._id)
+                  ? "ri-heart-fill text-red-600"
+                  : "ri-heart-line text-white"
+              } text-3xl`}
+            ></i>
             <i className="ri-send-plane-fill text-3xl"></i>
           </div>
         </div>
