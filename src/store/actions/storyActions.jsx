@@ -39,3 +39,13 @@ export const asyncLikeStory = (id) => async (dispatch, getState) => {
     console.log(error.response.data);
   }
 };
+
+export const asyncDeleteStory = (id) => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.get(`/story/delete/${id}`);
+    dispatch(asyncGetAllStories());
+    console.log(data);
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const StoryDiv = () => {
   const { stories } = useSelector((state) => state.storyReducer);
   const { user } = useSelector((state) => state.userReducer);
-  
+
   return (
     user && (
       <div className="story px-4 mt-5 flex gap-2 whitespace-nowrap overflow-x-auto">

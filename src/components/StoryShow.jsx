@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { asyncLikeStory } from "../store/actions/storyActions";
+import {
+  asyncDeleteStory,
+  asyncLikeStory,
+} from "../store/actions/storyActions";
 
 const StoryShow = () => {
   const navigate = useNavigate();
@@ -9,7 +12,7 @@ const StoryShow = () => {
   const { userId } = useParams();
   const { stories } = useSelector((state) => state.storyReducer);
   const { user } = useSelector((state) => state.userReducer);
-  const storyUser = stories && stories.find((s) => s.user._id === userId);
+  const storyUser = stories && stories.find((s) => s.user?._id === userId);
 
   // console.log(stories);
 
@@ -65,19 +68,29 @@ const StoryShow = () => {
           }}
           className="w-full absolute z-[5] top-0 left-0 py-4 border-b border-zinc-200"
         >
-          <div className="px-4 flex items-center gap-2">
-            <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden">
-              <img
-                className="w-full h-full object-cover"
-                src={storyUser.user?.profileImage?.url}
-                alt=""
-              />
+          <div className="px-4 flex items-center justify-between text-white">
+            <div className="flex items-center gap-2">
+              <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden">
+                <img
+                  className="w-full h-full object-cover"
+                  src={storyUser.user?.profileImage?.url}
+                  alt=""
+                />
+              </div>
+              <div className="user">
+                <h4 className="text-xl font-semibold leading-none">
+                  {storyUser.user.username}
+                </h4>
+              </div>
             </div>
-            <div className="user">
-              <h4 className="text-xl font-semibold leading-none text-white">
-                {storyUser.user.username}
-              </h4>
-            </div>
+            {user && story?.user === user?._id ? (
+              <i
+                onClick={() => dispatch(asyncDeleteStory(story._id))}
+                className="ri-delete-bin-line text-[1.4rem] cursor-pointer"
+              ></i>
+            ) : (
+              ""
+            )}
           </div>
           <div className="w-full h-[4px] bg-zinc-600 absolute bottom-0 overflow-hidden">
             <div
@@ -113,7 +126,7 @@ const StoryShow = () => {
             <i
               onClick={() => dispatch(asyncLikeStory(story._id))}
               className={`${
-                story.likes.includes(user?._id)
+                story?.likes.includes(user?._id)
                   ? "ri-heart-fill text-red-600"
                   : "ri-heart-line text-white"
               } text-3xl`}
