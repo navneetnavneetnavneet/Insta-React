@@ -6,6 +6,7 @@ import User from "./profile/user/User";
 import Icons from "./profile/Icons";
 import Post from "./profile/post/Post";
 import { asyncFindUserSavePost } from "../store/actions/userActions";
+import Loading from "./Loading";
 
 const FindUserSavePost = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const FindUserSavePost = () => {
 
   const [finduser, setFinduser] = useState(null);
 
-  const getFindUserPost = async () => {
+  const getFindUserSavePost = async () => {
     try {
       const data = await dispatch(asyncFindUserSavePost(userId));
       setFinduser(data);
@@ -23,19 +24,19 @@ const FindUserSavePost = () => {
   };
 
   useEffect(() => {
-    getFindUserPost();
+    getFindUserSavePost();
   }, [userId]);
 
   // console.log(finduser);
-  return (
-    finduser && (
-      <div className="w-full min-h-screen bg-zinc-900 text-white pb-20 relative overflow-x-hidden">
-        <Nav username={finduser.username} />
-        <User user={finduser} />
-        <Icons userId={finduser._id} />
-        <Post posts={finduser.savePosts} />
-      </div>
-    )
+  return finduser ? (
+    <div className="w-full min-h-screen bg-zinc-900 text-white pb-20 relative overflow-x-hidden">
+      <Nav username={finduser.username} />
+      <User user={finduser} />
+      <Icons userId={finduser._id} />
+      <Post posts={finduser.savePosts} />
+    </div>
+  ) : (
+    <Loading />
   );
 };
 

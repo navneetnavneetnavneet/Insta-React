@@ -6,6 +6,7 @@ import Nav from "./profile/Nav";
 import User from "./profile/user/User";
 import Icons from "./profile/Icons";
 import PostDiv from "./home/post/PostDiv";
+import Loading from "./Loading";
 
 const FindUserPost = () => {
   const dispatch = useDispatch();
@@ -27,17 +28,17 @@ const FindUserPost = () => {
     getFindUserPost();
   }, [userId]);
 
-  return (
-    finduser && (
-      <div className="w-full min-h-screen bg-zinc-900 text-white pb-20 relative overflow-x-hidden">
-        <Nav username={finduser.username} />
-        <User user={finduser} />
-        <Icons userId={finduser._id} />
-        {finduser.posts.map((post) => (
-          <PostDiv key={post._id} post={post} />
-        ))}
-      </div>
-    )
+  return finduser ? (
+    <div className="w-full min-h-screen bg-zinc-900 text-white pb-20 relative overflow-x-hidden">
+      <Nav username={finduser.username} />
+      <User user={finduser} />
+      <Icons userId={finduser._id} />
+      {finduser.posts.map((post) => (
+        <PostDiv key={post._id} post={post} />
+      ))}
+    </div>
+  ) : (
+    <Loading />
   );
 };
 

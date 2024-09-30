@@ -6,6 +6,7 @@ import Nav from "./profile/Nav";
 import Icons from "./profile/Icons";
 import User from "./profile/user/User";
 import Post from "./profile/post/Post";
+import Loading from "./Loading";
 
 const FindUserProfile = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const FindUserProfile = () => {
       <Post posts={finduser.posts} />
     </div>
   ) : (
-    <h1 className="text-center text-xl text-zinc-500 mt-20"></h1>
+    <Loading />
   );
 };
 
