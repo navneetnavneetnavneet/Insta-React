@@ -9,7 +9,7 @@ const StoryDiv = () => {
   return (
     user && (
       <div className="story px-4 mt-5 flex gap-2 whitespace-nowrap overflow-x-auto">
-        {stories.length === 0 ? <Story user={user} /> : ""}
+        {user.stories.length === 0 ? <Story user={user} /> : ""}
         {stories &&
           stories.map((story) => <Story key={story._id} user={story.user} />)}
       </div>
