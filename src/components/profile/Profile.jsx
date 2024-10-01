@@ -10,7 +10,7 @@ const Profile = () => {
 
   return (
     user && (
-      <div className="w-full min-h-screen bg-zinc-900 text-white relative overflow-x-hidden">
+      <div className="w-full md:w-1/3 md:mx-auto min-h-screen bg-zinc-900 text-white relative overflow-x-hidden">
         <Nav username={user.username} userId={user._id} />
         <User user={user} />
         <Icons userId={user._id} />

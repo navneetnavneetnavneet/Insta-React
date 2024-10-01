@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Icons = ({userId}) => {
   return (
-    <div className="icons w-full border-t border-b border-zinc-500 mt-5 px-8 py-4 flex items-center justify-between">
+    <div className="icons w-full border-t border-b border-zinc-500 mt-5 px-8 py-4 md:py-2 flex items-center justify-between">
       <Link to="/profile">
         <i className="text-[1.6rem] ri-layout-grid-line"></i>
       </Link>

@@ -5,7 +5,7 @@ const Post = ({ posts }) => {
     <div className="flex flex-wrap gap-1 mt-1">
       {posts.length > 0 ? (
         posts.map((post) => (
-          <div key={post._id} className="w-[32.2%] h-32 overflow-hidden flex-shrink-0">
+          <div key={post._id} className="w-[32.2%] h-32 md:h-40 overflow-hidden flex-shrink-0">
             <img
               className="w-full h-full object-cover"
               src={post.image.url}
