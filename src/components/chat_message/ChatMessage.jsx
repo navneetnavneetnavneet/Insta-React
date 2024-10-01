@@ -7,6 +7,7 @@ import TopNav from "./TopNav";
 import MessageContainer from "./MessageContainer";
 import MessageInput from "./MessageInput";
 import { asyncGetChatUserAllMessages } from "../../store/actions/messageActions";
+import Loading from "../Loading";
 
 const ChatMessage = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,14 @@ const ChatMessage = () => {
     return () => dispatch(setChatUser(null));
   }, [userId, dispatch]);
 
-  return (
-    chatUser && (
-      <div className="w-full h-screen bg-white">
-        <TopNav chatUser={chatUser} />
-        <MessageContainer />
-        <MessageInput />
-      </div>
-    )
+  return chatUser ? (
+    <div className="w-full h-screen bg-white">
+      <TopNav chatUser={chatUser} />
+      <MessageContainer />
+      <MessageInput />
+    </div>
+  ) : (
+    <Loading />
   );
 };
 
