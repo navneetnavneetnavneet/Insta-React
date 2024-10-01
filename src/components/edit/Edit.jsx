@@ -8,7 +8,7 @@ const Edit = () => {
 
   return (
     user && (
-      <div className="w-full min-h-screen bg-zinc-900 text-white">
+      <div className="w-full md:w-1/3 md:mx-auto min-h-screen bg-zinc-900 text-white">
         <Nav />
         <EditDetails user={user} />
       </div>

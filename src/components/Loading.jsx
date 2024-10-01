@@ -3,7 +3,7 @@ import instagram from "/instagram.webp"
 
 const Loading = () => {
   return (
-    <div className='w-full h-screen bg-white flex items-center justify-center'>
+    <div className='w-full md:w-1/3 md:mx-auto h-screen bg-zinc-900 flex items-center justify-center'>
         <img className='w-1/3' src={instagram} alt="" />
     </div>
   )
