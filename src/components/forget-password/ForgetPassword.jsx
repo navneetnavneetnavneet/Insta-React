@@ -21,7 +21,7 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="w-full min-h-screen px-4 flex flex-col gap-5 items-center pt-20">
+    <div className="w-full md:w-1/3 md:mx-auto min-h-screen bg-zinc-900 text-white px-4 flex flex-col gap-5 items-center pt-20">
       <div className="w-32 h-32 rounded-full border flex items-center justify-center">
         <i className="text-[3rem] ri-lock-line"></i>
       </div>
@@ -35,7 +35,7 @@ const ForgetPassword = () => {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           type="email"
-          placeholder="Email"
+          placeholder="Enter Your Email"
           className="w-full px-4 py-2 text-lg rounded-md border-2 border-zinc-700 outline-none bg-transparent"
         />
         <button className="w-full mt-4 px-4 py-2 text-lg text-white rounded-md bg-blue-600">
@@ -52,7 +52,7 @@ const ForgetPassword = () => {
       </Link>
       <Link
         to="/login"
-        className="w-full text-xl text-zinc-700 font-semibold py-2 border border-zinc-700 flex items-center justify-center absolute bottom-0"
+        className="w-full md:w-1/3 md:mx-auto text-xl text-zinc-400 font-semibold py-2 border border-zinc-700 flex items-center justify-center absolute bottom-0"
       >
         Back to login
       </Link>

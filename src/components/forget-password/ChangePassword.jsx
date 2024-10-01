@@ -18,7 +18,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="w-full min-screen px-4 flex flex-col items-center gap-5 pt-40">
+    <div className="w-full md:w-1/3 md:mx-auto bg-zinc-900 text-white min-screen px-4 flex flex-col items-center gap-5 pt-40">
       <h1 className="text-2xl font-semibold">Create a strong password</h1>
       <p className="text-lg text-zinc-700 text-center">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis,

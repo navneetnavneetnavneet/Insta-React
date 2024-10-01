@@ -22,8 +22,8 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center justify-center py-5 text-white">
-      <div className="lg:w-1/3 flex flex-col items-center gap-5 px-6">
+    <div className="w-full md:w-1/3 md:mx-auto min-h-screen bg-zinc-900 flex flex-col items-center justify-center py-5 text-white">
+      <div className="w-full flex flex-col items-center gap-5 px-6">
         <img className="w-1/2" src="../../public/logo.png" alt="" />
         <form onSubmit={submitHandler} className="w-full text-lg">
           <input
