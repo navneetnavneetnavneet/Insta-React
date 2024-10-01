@@ -6,14 +6,14 @@ const ChatPage = () => {
 
   return (
     users && (
-      <div className="w-full min-h-screen bg-white overflow-y-auto">
+      <div className="w-full md:w-1/3 md:mx-auto min-h-screen bg-zinc-900 text-white overflow-y-auto">
         {users.map((user) => (
           <Link
             to={`/chat/${user._id}`}
             key={user._id}
             className="w-full px-4 py-4 flex items-center gap-2 border-b border-zinc-200"
           >
-            <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden">
+            <div className="w-[10vw] h-[10vw] md:w-[3vw] md:h-[3vw] rounded-full overflow-hidden">
               <img
                 className="w-full h-full object-cover"
                 src={user.profileImage.url}

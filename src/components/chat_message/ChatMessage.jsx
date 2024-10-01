@@ -23,7 +23,7 @@ const ChatMessage = () => {
   }, [userId, dispatch]);
 
   return chatUser ? (
-    <div className="w-full h-screen bg-white">
+    <div className="w-full md:w-1/3 md:mx-auto h-screen bg-zinc-900">
       <TopNav chatUser={chatUser} />
       <MessageContainer />
       <MessageInput />

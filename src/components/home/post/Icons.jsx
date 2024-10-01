@@ -21,13 +21,13 @@ const Icons = ({ likes, postId }) => {
             likes.indexOf(user._id) === -1
               ? "ri-heart-3-line"
               : "ri-heart-3-fill text-red-600"
-          }`}
+          } cursor-pointer`}
         ></i>
         <i
           onClick={() => navigate(`/post/comment/${postId}`)}
-          className="ri-chat-3-line"
+          className="ri-chat-3-line cursor-pointer"
         ></i>
-        <i className="ri-share-circle-line"></i>
+        <i className="ri-share-circle-line cursor-pointer"></i>
       </div>
       <i
         onClick={() => dispatch(asyncSavePost(postId))}
@@ -35,7 +35,7 @@ const Icons = ({ likes, postId }) => {
           user.savePosts.indexOf(postId) === -1
             ? "ri-bookmark-line"
             : "ri-bookmark-fill text-white"
-        }`}
+        } cursor-pointer`}
       ></i>
     </div>
   );

@@ -26,7 +26,7 @@ const MessageInput = () => {
   }, [messages, socket, setMessages]);
 
   return (
-    <div className="w-full mt-2 flex items-center justify-between">
+    <div className="w-full mt-2 px-2 text-white flex items-center justify-between">
       <form
         onSubmit={sendMessageHandler}
         className="w-full rounded-full px-2 flex items-center justify-between border-2 border-zinc-600"

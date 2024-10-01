@@ -9,14 +9,14 @@ const TopNav = ({ chatUser }) => {
 
   return (
     chatUser && (
-      <div className="w-full px-4 py-2 border-b border-zinc-600 flex items-center justify-between">
+      <div className="w-full px-4 py-2 md:py-4 border-b text-white border-zinc-600 flex items-center justify-between">
         <div className="user flex items-center gap-2">
           <i
             onClick={() => navigate(-1)}
-            className="ri-arrow-left-line text-xl font-semibold"
+            className="ri-arrow-left-line text-xl font-semibold cursor-pointer"
           ></i>
           <div className="relative">
-            <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden">
+            <div className="w-[10vw] h-[10vw] md:w-[3vw] md:h-[3vw] rounded-full overflow-hidden">
               <img
                 className="w-full h-full object-cover"
                 src={chatUser.profileImage.url}
@@ -24,7 +24,7 @@ const TopNav = ({ chatUser }) => {
               />
             </div>
             <span
-              className={`absolute w-[3vw] h-[3vw] bottom-0 right-0 rounded-full z-[10] ${
+              className={`absolute w-[3vw] h-[3vw] md:w-[1vw] md:h-[1vw] bottom-0 right-0 rounded-full z-[10] ${
                 onlineUsers.includes(chatUser?._id) ? "bg-emerald-500" : ""
               } `}
             ></span>
