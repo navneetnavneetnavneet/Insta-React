@@ -15,7 +15,7 @@ const Home = () => {
   }, [posts]);
 
   return reversePosts ? (
-    <div className="w-full min-h-screen pb-20 bg-zinc-900">
+    <div className="w-full md:w-1/3 md:mx-auto min-h-screen pb-20 bg-zinc-900">
       <Nav />
       <StoryDiv />
       {reversePosts.map((post) => (

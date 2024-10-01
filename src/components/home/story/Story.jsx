@@ -23,7 +23,7 @@ const Story = ({ user }) => {
         {loggedInUser.user._id === user._id ? (
           <Link
             to="/story/upload"
-            className="w-[6vw] h-[6vw] flex items-center justify-center absolute z-[100] bottom-[3vw] right-[3vw] translate-x-1/2 translate-y-1/2 rounded-full bg-zinc-200"
+            className="w-[6vw] md:w-[2vw] md:h-[2vw] h-[6vw] flex items-center justify-center absolute z-[100] bottom-[3vw] right-[3vw] md:bottom-[1vw] md:right-[1vw] translate-x-1/2 translate-y-1/2 rounded-full bg-zinc-200"
           >
             <i className="ri-add-line text-[1.4rem] font-semibold"></i>
           </Link>

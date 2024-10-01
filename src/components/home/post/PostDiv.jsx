@@ -7,7 +7,7 @@ import UserDetails from "./UserDetails";
 const PostDiv = ({ post }) => {
   return (
     post && (
-      <div className="w-full min-h-[50vh] mt-10 text-white">
+      <div className="w-full min-h-[50vh] mt-5 text-white">
         <User user={post.user} />
         <Post image={post.image} />
         <Icons likes={post.likes} postId={post._id} />
