@@ -36,14 +36,14 @@ const Details = () => {
   return (
     <div className="mt-20">
       <div className="flex flex-col items-center gap-2">
-        <div className="image w-[25vw] h-[25vw] rounded-full border-2 border-zinc-800 flex items-center justify-center">
+        <div className="image w-[25vw] h-[25vw] md:w-[6vw] md:h-[6vw] rounded-full border-2 border-zinc-800 flex items-center justify-center">
           <i className="text-5xl font-light ri-image-line"></i>
         </div>
         <button onClick={imageHandler} className="text-blue-500 capitalize">
           select picture
         </button>
       </div>
-      <form onSubmit={submitHandler} className="w-full px-6 py-3 mt-10">
+      <form onSubmit={submitHandler} className="w-full px-6 py-3 mt-5">
         <input
           hidden
           onChange={handleImageChange}
