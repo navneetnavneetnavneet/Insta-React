@@ -22,7 +22,7 @@ const Search = () => {
   }, [username]);
 
   return (
-    <div className="w-full min-h-screen bg-zinc-900 px-4 py-4 text-white">
+    <div className="w-full md:w-1/3 md:mx-auto min-h-screen bg-zinc-900 px-4 py-4 text-white">
       <div className="border-2 border-zinc-700 flex items-center justify-between px-2 py-1 rounded-md">
         <i className="ri-search-line"></i>
         <input

@@ -3,7 +3,7 @@ import React from 'react'
 const User = ({user}) => {
   return (
     <div className='px-4 flex items-center gap-2'>
-      <div className='w-[10vw] h-[10vw] md:w-[4vw] md:h-[4vw] rounded-full overflow-hidden'>
+      <div className='w-[10vw] h-[10vw] md:w-[3vw] md:h-[3vw] rounded-full overflow-hidden'>
         <img className='w-full h-full object-cover' src={user.profileImage.url} alt="" />
       </div>
       <div className='flex items-center gap-x-1'>
