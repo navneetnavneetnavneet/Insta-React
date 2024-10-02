@@ -56,25 +56,29 @@ const MainRoutes = () => {
 
   // socket.io
   useEffect(() => {
+    let newSocket;
     if (user) {
-      const socket = io("http://localhost:8080", {
+      newSocket = io("http://localhost:8080", {
         query: {
           userId: user._id,
         },
       });
-      dispatch(setSocket(socket));
+      dispatch(setSocket(newSocket));
 
-      socket.on("getOnlineUsers", (onlineUsers) => {
+      newSocket.on("getOnlineUsers", (onlineUsers) => {
         dispatch(setOnlineUsers(onlineUsers));
       });
 
-      // Clean up socket connection
-      return () => socket.close();
-    } else {
-      if (socket) {
-        socket.close();
+      // Cleanup on component unmount or user change
+      return () => {
+        if (newSocket) {
+          newSocket.disconnect();
+        }
         dispatch(setSocket(null));
-      }
+      };
+    } else if (socket) {
+      socket.disconnect();
+      dispatch(setSocket(null));
     }
   }, [user, dispatch]);
 

@@ -13,20 +13,26 @@ const MessageInput = () => {
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
-    dispatch(asyncSendMessage(chatUser?._id, message));
-    setMessage("");
+    if (message.trim() !== "") {
+      dispatch(asyncSendMessage(chatUser?._id, message));
+      setMessage("");
+    }
   };
 
   useEffect(() => {
-    sendMessageHandler;
+    if (socket) {
+      socket?.on("newMessage", async (newMessage) => {
+        await dispatch(setMessages([...messages, newMessage]));
+      });
+    }
 
-    socket?.on("newMessage", (newMessage) => {
-      dispatch(setMessages([...messages, newMessage]));
-    });
-  }, [messages, socket, setMessages]);
+    return () => {
+      socket.off("newMessage");
+    };
+  }, [messages, socket, dispatch]);
 
   return (
-    <div className="w-full mt-2 px-2 text-white flex items-center justify-between">
+    <div className="w-full mt-2 flex text-white items-center justify-between">
       <form
         onSubmit={sendMessageHandler}
         className="w-full rounded-full px-2 flex items-center justify-between border-2 border-zinc-600"
