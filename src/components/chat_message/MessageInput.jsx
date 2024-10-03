@@ -7,28 +7,31 @@ const MessageInput = () => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
 
-  const { chatUser } = useSelector((state) => state.userReducer);
+  const { chatUser, user } = useSelector((state) => state.userReducer);
   const { messages } = useSelector((state) => state.messageReducer);
   const { socket } = useSelector((state) => state.socketReducer);
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
-    if (message.trim() !== "") {
-      dispatch(asyncSendMessage(chatUser?._id, message));
+    if (message.trim() !== "" && chatUser?._id) {
+      dispatch(asyncSendMessage(chatUser._id, message));
       setMessage("");
     }
   };
 
   useEffect(() => {
     if (socket) {
-      socket?.on("newMessage", async (newMessage) => {
-        await dispatch(setMessages([...messages, newMessage]));
-      });
-    }
+      const handleNewMessage = (newMessage) => {
+        const updatedMessages = [...messages, newMessage];
+        dispatch(setMessages(updatedMessages));
+      };
 
-    return () => {
-      socket.off("newMessage");
-    };
+      socket.on("newMessage", handleNewMessage);
+
+      return () => {
+        socket.off("newMessage", handleNewMessage);
+      };
+    }
   }, [messages, socket, dispatch]);
 
   return (
