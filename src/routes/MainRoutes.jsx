@@ -19,21 +19,18 @@ import FindUserSavePost from "../components/FindUserSavePost";
 import Comment from "../components/comment/Comment";
 import ChatPage from "../components/ChatPage";
 import ChatMessage from "../components/chat_message/ChatMessage";
-import io from "socket.io-client";
-import { setSocket } from "../store/reducers/socketSlice";
-import { setOnlineUsers, setUsers } from "../store/reducers/userSlice";
 import { asyncGetAllStories } from "../store/actions/storyActions";
 import StoryShow from "../components/StoryShow";
 import UploadStory from "../components/upload_story/UploadStory";
 import { setStories } from "../store/reducers/storySlice";
 import { allPosts } from "../store/reducers/postSlice";
+import { setUsers } from "../store/reducers/userSlice";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { isAuthenticated, user } = useSelector((state) => state.userReducer);
-  const { socket } = useSelector((state) => state.socketReducer);
 
   useEffect(() => {
     dispatch(asyncLoadUser());
@@ -54,33 +51,7 @@ const MainRoutes = () => {
     };
   }, [isAuthenticated, dispatch]);
 
-  // socket.io
-  useEffect(() => {
-    let newSocket;
-    if (user) {
-      newSocket = io("http://localhost:8080", {
-        query: {
-          userId: user._id,
-        },
-      });
-      dispatch(setSocket(newSocket));
-
-      newSocket.on("getOnlineUsers", (onlineUsers) => {
-        dispatch(setOnlineUsers(onlineUsers));
-      });
-
-      // Cleanup on component unmount or user change
-      return () => {
-        if (newSocket) {
-          newSocket.disconnect();
-        }
-        dispatch(setSocket(null));
-      };
-    } else if (socket) {
-      socket.disconnect();
-      dispatch(setSocket(null));
-    }
-  }, [user, dispatch]);
+  
 
   return (
     <div>

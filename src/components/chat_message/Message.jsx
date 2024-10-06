@@ -28,7 +28,7 @@ const Message = ({ message }) => {
               }
         }
         ref={scroll}
-        className={`message px-4 py-2 md:px-2 md:py-1 mb-1 w-fit rounded-md text-white text-lg font-semibold`}
+        className={`message px-4 py-2 md:px-2 md:py-1 mb-2 w-fit rounded-md text-white text-lg font-semibold`}
       >
         {message.message}
       </div>

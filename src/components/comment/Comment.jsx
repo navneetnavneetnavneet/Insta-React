@@ -20,17 +20,18 @@ const Comment = () => {
   return (
     post &&
     user && (
-      <div className="w-full h-screen bg-white">
+      <div className="w-full h-screen text-white bg-zinc-900">
         <div className="w-full h-[85vh] overflow-y-auto">
           <h1 className="text-xl font-bold text-center border-b py-2">
             Comments
           </h1>
           {post.comments.map((c, idx) => (
-            <div
+            <Link
+              to={`/user/profile/${c.users[0].username}`}
               key={idx}
               className="w-full px-2 py-2 border-b border-zinc-300"
             >
-              <div className="user flex gap-2 items-center">
+              <div className="user flex gap-x-2 items-center">
                 <div className="w-[12vw] h-[12vw] rounded-full overflow-hidden flex-shrink-0">
                   <img
                     className="w-full h-full object-cover"
@@ -38,17 +39,17 @@ const Comment = () => {
                     alt=""
                   />
                 </div>
-                <div className="mt-5">
+                <div className="">
                   <h4 className="text-xl font-semibold leading-none">
                     {c.users[0].username}
                   </h4>
                   <p className="text-zinc-400">{c.comment.slice(0, 40)}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-        <div className="w-full h-[9vh] px-2 z-[200] bg-white/90 flex items-center">
+        <div className="w-full h-[7.5vh] px-2 z-[200] bg-zinc-900 border-2 border-zinc-700 rounded-full flex items-center">
           <div className="w-[12vw] h-[12vw] rounded-full overflow-hidden flex-shrink-0">
             <img
               className="w-full h-full object-cover"

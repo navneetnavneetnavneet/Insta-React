@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncSendMessage } from "../../store/actions/messageActions";
 import { setMessages } from "../../store/reducers/messageSlice";
+import { SocketContext } from "../../context/SocketContext";
 
 const MessageInput = () => {
   const dispatch = useDispatch();
@@ -9,7 +10,8 @@ const MessageInput = () => {
 
   const { chatUser, user } = useSelector((state) => state.userReducer);
   const { messages } = useSelector((state) => state.messageReducer);
-  const { socket } = useSelector((state) => state.socketReducer);
+
+  const { socket } = useContext(SocketContext);
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
