@@ -100,11 +100,24 @@ const StoryShow = () => {
           </div>
         </div>
         <div className="w-full h-screen overflow-hidden">
-          <img
-            className="w-full h-full object-cover"
-            src={storyUser.user?.stories[currentIndex]?.storyUrl.url}
-            alt=""
-          />
+          {storyUser.user?.stories[currentIndex]?.storyUrl.fileType ===
+            "image" && (
+            <img
+              className="w-full h-full object-cover"
+              src={storyUser.user?.stories[currentIndex]?.storyUrl.url}
+              alt=""
+            />
+          )}
+          {storyUser.user?.stories[currentIndex]?.storyUrl.fileType ===
+            "video" && (
+            <video
+              autoPlay={true}
+              loop={true}
+              muted={true}
+              className="w-full h-full object-cover"
+              src={storyUser.user?.stories[currentIndex]?.storyUrl.url}
+            ></video>
+          )}
         </div>
         <div
           onClick={handlePreviousStroy}
