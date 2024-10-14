@@ -35,6 +35,8 @@ const EditDetails = ({ user }) => {
       fullName,
       bio,
     };
+    console.log(updatedUser);
+    
     await dispatch(asyncEditUser(updatedUser));
     navigate("/profile");
   };
