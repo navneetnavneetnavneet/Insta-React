@@ -51,10 +51,8 @@ const MainRoutes = () => {
     };
   }, [isAuthenticated, dispatch]);
 
-  
-
   return (
-    <div>
+    <>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -80,7 +78,7 @@ const MainRoutes = () => {
       </Routes>
 
       <BottomNav />
-    </div>
+    </>
   );
 };
 
