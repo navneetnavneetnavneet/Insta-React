@@ -5,6 +5,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "../src/store/store.jsx";
+import { ToastContainer } from "react-toastify";
 import { SocketContextProvider } from "./context/SocketContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -12,6 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <SocketContextProvider>
         <App />
+        <ToastContainer />
       </SocketContextProvider>
     </BrowserRouter>
   </Provider>

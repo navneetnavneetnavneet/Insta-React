@@ -1,66 +1,76 @@
+import { loadUser, removeUser, setAllUser } from "../reducers/userSlice";
 import axios from "../../utils/axios";
-import { load, remove, setChatUser, setUsers } from "../reducers/userSlice";
 
 export const asyncLoadUser = () => async (dispatch, getState) => {
   try {
-    const { data } = await axios.post("/user");
-    dispatch(load(data));
-    console.log(data);
+    const { data, status } = await axios.get("/users/current-user");
+    // console.log(data);
+
+    if (data && status === 200) {
+      await dispatch(loadUser(data));
+    }
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
-export const asyncRegisterUser =
-  ({ username, fullName, email, password }) =>
+export const asyncSignUpUser =
+  ({ username, email, fullName, password }) =>
   async (dispatch, getState) => {
     try {
-      const { data } = await axios.post("/user/register", {
+      const { data, status } = await axios.post("/users/signup", {
         username,
-        fullName,
         email,
+        fullName,
         password,
       });
-      // console.log(data);
-      dispatch(asyncLoadUser());
+
+      if (data && status === 201) {
+        await dispatch(asyncLoadUser());
+      }
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
-export const asyncLoginUser =
+export const asyncSignInUser =
   ({ username, password }) =>
   async (dispatch, getState) => {
     try {
-      const { data } = await axios.post("/user/login", {
+      const { data, status } = await axios.post("/users/signin", {
         username,
         password,
       });
-      // console.log(data);
-      dispatch(asyncLoadUser());
+
+      if (data && status === 200) {
+        await dispatch(asyncLoadUser());
+      }
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
-export const asyncLogoutUser = () => async (dispatch, getState) => {
+export const asyncSignOutUser = () => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get("/user/logout");
-    console.log(data);
-    dispatch(remove());
+    const { data, status } = await axios.get("/users/signout");
+
+    if (data && status === 200) {
+      await dispatch(removeUser());
+    }
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
-export const asyncForgetPassword = (email) => async (dispatch, getState) => {
+export const asyncForgotPassword = (email) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.post("/user/send-mail", { email });
-    dispatch({
-      type: "URL_SEND_SUCCESS",
-      payload: data,
+    const { data, status } = await axios.post("/users/send-email", {
+      email,
     });
-    return data;
+
+    if (data && status === 200) {
+      return data;
+    }
   } catch (error) {
     console.log(error.response.data);
   }
@@ -69,28 +79,29 @@ export const asyncForgetPassword = (email) => async (dispatch, getState) => {
 export const asyncChangePassword =
   (userId, password) => async (dispatch, getState) => {
     try {
-      const { data } = await axios.post(
-        `/user/forget-password-link/${userId}`,
+      const { data, status } = await axios.post(
+        `/users/forget-password-link/${userId}`,
         { password }
       );
-      console.log(data);
-      dispatch();
+      if (data && status === 200) {
+        return data;
+      }
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
-export const asyncEditUser =
-  ({ profileImage, username, fullName, bio }) =>
+export const asyncEditUserProfile =
+  ({ fullName, email, bio, profileImage }) =>
   async (dispatch, getState) => {
     try {
-      const { data } = await axios.post(
-        "/user/edit",
+      const { data, status } = await axios.post(
+        "/users/edit",
         {
-          profileImage,
-          username,
           fullName,
+          email,
           bio,
+          profileImage,
         },
         {
           headers: {
@@ -99,7 +110,9 @@ export const asyncEditUser =
         }
       );
 
-      dispatch(asyncLoadUser());
+      if (data && status === 200) {
+        await dispatch(asyncLoadUser());
+      }
     } catch (error) {
       console.log(error.response.data);
     }
@@ -107,51 +120,24 @@ export const asyncEditUser =
 
 export const asyncSearchUser = (username) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.post(`/user/search/${username}`);
-    dispatch(setUsers(data.users));
-  } catch (error) {
-    console.log(error.response.data);
-  }
-};
+    const { data, status } = await axios.get(`/users/search/${username}`);
 
-export const asyncFindUserProfile =
-  (username) => async (dispatch, getState) => {
-    try {
-      const { data } = await axios.get(`/user/profile/${username}`);
-      // console.log(data);
-      dispatch({
-        type: "Find_User_Profile",
-        payload: data.finduser,
-      });
-      return data.finduser;
-    } catch (error) {
-      console.log(error.response.data);
+    if (data && status === 200) {
+      await dispatch(asyncLoadUser());
+      return data;
     }
-  };
-
-export const asyncFindUserPost = (userId) => async (dispatch, getState) => {
-  try {
-    const { data } = await axios.get(`/user/post/${userId}`);
-    // console.log(data);
-    dispatch({
-      type: "Find_User_Post",
-      payload: data.finduser,
-    });
-    return data.finduser;
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
-export const asyncFindUserSavePost = (userId) => async (dispatch, getState) => {
+export const asyncFetchAllUsers = () => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/user/savepost/${userId}`);
-    // console.log(data);
-    dispatch({
-      type: "Find_User_Save_Post",
-      payload: data.finduser,
-    });
-    return data.finduser;
+    const { data, status } = await axios.get("/users");
+
+    if (data && status === 200) {
+      await dispatch(setAllUser(data));
+    }
   } catch (error) {
     console.log(error.response.data);
   }
@@ -160,28 +146,50 @@ export const asyncFindUserSavePost = (userId) => async (dispatch, getState) => {
 export const asyncFollowAndFollowing =
   (userId) => async (dispatch, getState) => {
     try {
-      const { data } = await axios.get(`/user/follow/${userId}`);
-      dispatch(asyncLoadUser());
-      console.log(data);
+      const { data, status } = await axios.get(`/users/follow/${userId}`);
+
+      if (data && status === 200) {
+        await dispatch(asyncLoadUser());
+      }
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
-export const asyncGetAllUser = () => async (dispatch, getState) => {
+export const asyncFindUserProfile = (userId) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get("/user/chat/allusers");
-    dispatch(setUsers(data));
+    const { data, status } = await axios.get(`/users/profile/${userId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncLoadUser());
+      return data;
+    }
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
-export const asyncGetChatUser = (id) => async (dispatch, getState) => {
+export const asyncFindUserPost = (userId) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/user/chat/${id}`);
-    // console.log(data);
-    dispatch(setChatUser(data));
+    const { data, status } = await axios.get(`/users/post/${userId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncLoadUser());
+      return data;
+    }
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncFindUserSavePost = (userId) => async (dispatch, getState) => {
+  try {
+    const { data, status } = await axios.get(`/users/savepost/${userId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncLoadUser());
+      return data;
+    }
   } catch (error) {
     console.log(error.response.data);
   }

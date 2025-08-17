@@ -1,53 +1,61 @@
-import axios from "../../utils/axios";
 import { setStories } from "../reducers/storySlice";
+import axios from "../../utils/axios";
 import { asyncLoadUser } from "./userActions";
 
-export const asyncGetAllStories = () => async (dispatch, getState) => {
+export const asyncFetchAllStories = () => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get("/story");
-    console.log(data);
-    dispatch(setStories(data.stories));
-  } catch (error) {
-    console.log(error.response.data);
-  }
-};
+    const { data, status } = await axios.get("/stories");
 
-export const asyncUploadStory =
-  ({ storyUrl }) =>
-  async (dispatch, getState) => {
-    try {
-      const { data } = await axios.post(
-        "/story/upload-story",
-        { storyUrl },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      dispatch(asyncGetAllStories());
-      dispatch(asyncLoadUser());
-    } catch (error) {
-      console.log(error.response.data);
+    if (data && status === 200) {
+      await dispatch(setStories(data.stories));
     }
-  };
-
-export const asyncLikeStory = (id) => async (dispatch, getState) => {
-  try {
-    const { data } = await axios.get(`/story/like/${id}`);
-    dispatch(asyncGetAllStories());
-    console.log(data);
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
-export const asyncDeleteStory = (id) => async (dispatch, getState) => {
+export const asyncUploadStory = (media) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/story/delete/${id}`);
-    dispatch(asyncGetAllStories());
-    dispatch(asyncLoadUser());
-    console.log(data);
+    const { data, status } = await axios.post(
+      "/stories/upload-story",
+      { media },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (data && status === 201) {
+      await dispatch(asyncFetchAllStories());
+      await dispatch(asyncLoadUser());
+    }
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncLikeStory = (storyId) => async (dispatch, getState) => {
+  try {
+    const { data, status } = await axios.get(`/stories/like/${storyId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncFetchAllStories());
+      await dispatch(asyncLoadUser());
+    }
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncDeleteStory = (storyId) => async (dispatch, getState) => {
+  try {
+    const { data, status } = await axios.get(`/stories/delete/${storyId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncFetchAllStories());
+      await dispatch(asyncLoadUser());
+    }
   } catch (error) {
     console.log(error.response.data);
   }

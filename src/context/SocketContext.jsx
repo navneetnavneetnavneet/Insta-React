@@ -1,47 +1,52 @@
 import { createContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import { setOnlineUsers } from "../store/reducers/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 
-export const SocketContext = createContext();
+export const socketContext = createContext(null);
 
 export const SocketContextProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
 
   const [socket, setSocket] = useState(null);
 
-  // socket.io
+  const { user } = useSelector((state) => state.userReducer);
+
   useEffect(() => {
-    let newSocket;
-    if (user) {
-      newSocket = io("http://localhost:8080", {
-        query: {
-          userId: user._id,
-        },
-      });
-      setSocket(newSocket);
-
-      newSocket.on("getOnlineUsers", (onlineUsers) => {
-        dispatch(setOnlineUsers(onlineUsers));
-      });
-
-      // Cleanup on component unmount or user change
-      return () => {
-        if (newSocket) {
-          newSocket.disconnect();
-        }
-        setSocket(null);
-      };
-    } else if (socket) {
-      socket.disconnect();
-      setSocket(null);
+    if (!user) {
+      if (socket) {
+        socket.disconnect(); // Disconnect socket if the user logs out
+        setSocket(null); // Clear the socket instance
+      }
+      return;
     }
-  }, [user, dispatch]);
+
+    const newSocket = io("http://localhost:8080/");
+    setSocket(newSocket);
+
+    // Setup the socket for the current user
+    newSocket.emit("setup", user);
+
+    newSocket.on("connected", () => {
+      // console.log("Socket is connected!");
+    });
+
+    newSocket.on("getOnlineUsers", async (onlineUsers) => {
+      await dispatch(setOnlineUsers(onlineUsers));
+    });
+
+    // Cleanup on component unmount or user change
+    return () => {
+      if (newSocket) {
+        newSocket.disconnect();
+        // console.log("Socket disconnected!");
+      }
+    };
+  }, [user]);
 
   return (
-    <SocketContext.Provider value={{ socket, setSocket }}>
+    <socketContext.Provider value={{ socket, setSocket }}>
       {children}
-    </SocketContext.Provider>
+    </socketContext.Provider>
   );
 };

@@ -1,13 +1,13 @@
-import axios from "../../utils/axios";
 import { allPosts } from "../reducers/postSlice";
-import { asyncLoadUser } from "./userActions";
+import { asyncLoadUser } from "../actions/userActions";
+import axios from "../../utils/axios";
 
-export const asyncGetAllPost = () => async (dispatch, getState) => {
+export const asyncFectchAllPosts = () => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get("/post");
-    console.log(data);
-    if (data) {
-      dispatch(allPosts(data.posts));
+    const { data, status } = await axios.get("/posts");
+
+    if (data && status === 200) {
+      await dispatch(allPosts(data));
     }
   } catch (error) {
     console.log(error.response.data);
@@ -15,15 +15,14 @@ export const asyncGetAllPost = () => async (dispatch, getState) => {
 };
 
 export const asyncUploadPost =
-  ({ image, caption }) =>
+  ({ caption, media }) =>
   async (dispatch, getState) => {
     try {
-      const posts = getState().postReducer;
-      const { data } = await axios.post(
-        "/post/upload",
+      const { data, status } = await axios.post(
+        "/posts/upload-post",
         {
-          image,
           caption,
+          media,
         },
         {
           headers: {
@@ -31,7 +30,11 @@ export const asyncUploadPost =
           },
         }
       );
-      dispatch(asyncGetAllPost());
+
+      if (data && status === 201) {
+        await dispatch(asyncFectchAllPosts());
+        await dispatch(asyncLoadUser());
+      }
     } catch (error) {
       console.log(error.response.data);
     }
@@ -39,10 +42,11 @@ export const asyncUploadPost =
 
 export const asyncLikePost = (postId) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/post/like/${postId}`);
-    console.log(data);
-    dispatch(asyncGetAllPost());
-    dispatch(asyncLoadUser());
+    const { data, status } = await axios.get(`/posts/like-post/${postId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncFectchAllPosts());
+    }
   } catch (error) {
     console.log(error.response.data);
   }
@@ -50,21 +54,43 @@ export const asyncLikePost = (postId) => async (dispatch, getState) => {
 
 export const asyncSavePost = (postId) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/post/save/${postId}`);
-    console.log(data);
-    // dispatch(asyncGetAllPost());
-    dispatch(asyncLoadUser());
+    const { data, status } = await axios.get(`/posts/save-post/${postId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncFectchAllPosts());
+      await dispatch(asyncLoadUser());
+    }
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
-export const asyncSendComment =
+export const asyncDeletePost = (postId) => async (dispatch, getState) => {
+  try {
+    const { data, status } = await axios.get(`/posts/delete-post/${postId}`);
+
+    if (data && status === 200) {
+      await dispatch(asyncFectchAllPosts());
+      await dispatch(asyncLoadUser());
+    }
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const asyncCommentPost =
   (postId, comment) => async (dispatch, getState) => {
     try {
-      const { data } = await axios.post(`/post/comment/${postId}`, { comment });
-      // console.log(data);
-      dispatch(asyncGetAllPost());
+      const { data, status } = await axios.post(
+        `/posts/comment-post/${postId}`,
+        {
+          comment,
+        }
+      );
+
+      if (data && status === 200) {
+        await dispatch(asyncFectchAllPosts());
+      }
     } catch (error) {
       console.log(error.response.data);
     }

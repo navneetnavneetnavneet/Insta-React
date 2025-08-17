@@ -1,83 +1,97 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
-import Home from "../components/home/Home";
-import Register from "../components/partials/Register";
-import Login from "../components/partials/Login";
-import ForgetPassword from "../components/forget-password/ForgetPassword";
-import ChangePassword from "../components/forget-password/ChangePassword";
-import Search from "../components/search/Search";
-import Upload from "../components/upload/Upload";
-import Profile from "../components/profile/Profile";
-import Edit from "../components/edit/Edit";
-import BottomNav from "../components/partials/BottomNav";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import HomePage from "../pages/HomePage";
+import SignUpPage from "../pages/SignUpPage";
+import SignInPage from "../pages/SignInPage";
+import SearchPage from "../pages/SearchPage";
+import UploadPost from "../pages/UploadPost";
+import ProfilePage from "../pages/ProfilePage";
+import EditProfilePage from "../pages/EditProfilePage";
+import {
+  asyncFetchAllUsers,
+  asyncLoadUser,
+} from "../store/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { asyncGetAllUser, asyncLoadUser } from "../store/actions/userActions";
-import { asyncGetAllPost } from "../store/actions/postActions";
-import FindUserProfile from "../components/FindUserProfile";
-import FindUserPost from "../components/FindUserPost";
-import FindUserSavePost from "../components/FindUserSavePost";
-import Comment from "../components/comment/Comment";
-import ChatPage from "../components/ChatPage";
-import ChatMessage from "../components/chat_message/ChatMessage";
-import { asyncGetAllStories } from "../store/actions/storyActions";
-import StoryShow from "../components/StoryShow";
-import UploadStory from "../components/upload_story/UploadStory";
-import { setStories } from "../store/reducers/storySlice";
+import Footer from "../components/partials/Footer";
+import { asyncFectchAllPosts } from "../store/actions/postActions";
+import CommentPage from "../pages/CommentPage";
+import ChatPage from "../pages/ChatPage";
+import ChatMessagePage from "../pages/ChatMessagePage";
+import CreateGroupPage from "../pages/CreateGroupPage";
+import UpdateGroupChat from "../pages/UpdateGroupChat";
+import ChatDetails from "../pages/ChatDetails";
+import { setChats } from "../store/reducers/chatSlice";
+import { setAllUser } from "../store/reducers/userSlice";
 import { allPosts } from "../store/reducers/postSlice";
-import { setUsers } from "../store/reducers/userSlice";
+import UploadStory from "../pages/UploadStoryPage";
+import StoryPage from "../pages/StoryPage";
+import { asyncFetchAllStories } from "../store/actions/storyActions";
+import { setStories } from "../store/reducers/storySlice";
+import FindUserProfilePage from "../pages/FindUserProfilePage";
+import FindUserPostPage from "../pages/FindUserPostPage";
+import FindUserSavePostPage from "../pages/FindUserSavePostPage";
+import ForgetPasswordPage from "../pages/ForgotPasswordPage";
+import ChangePasswordPage from "../pages/ChangePasswordPage";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated, user } = useSelector((state) => state.userReducer);
+  const { pathname } = useLocation();
+
+  const { user, isAuthenticated } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(asyncLoadUser());
-    dispatch(asyncGetAllPost());
-    dispatch(asyncGetAllUser());
-    dispatch(asyncGetAllStories());
+    dispatch(asyncFectchAllPosts());
+    dispatch(asyncFetchAllUsers());
+    dispatch(asyncFetchAllStories());
 
-    if (isAuthenticated) {
-      navigate("/");
-    } else {
-      navigate("/login");
-    }
+    isAuthenticated && navigate("/");
+    !isAuthenticated && navigate("/sign-in");
 
     return () => {
-      dispatch(setStories([]));
       dispatch(allPosts([]));
-      dispatch(setUsers([]));
+      dispatch(setChats([]));
+      dispatch(setAllUser([]));
+      dispatch(setStories([]));
     };
-  }, [isAuthenticated, dispatch]);
+  }, [isAuthenticated]);
+
+  const path = ["/", "/search", "/upload-post", "/profile"];
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/change-password/:userId" element={<ChangePassword />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/edit" element={<Edit />} />
-
-        <Route path="/user/profile/:username" element={<FindUserProfile />} />
-        <Route path="/user/post/:userId" element={<FindUserPost />} />
-        <Route path="/user/save_post/:userId" element={<FindUserSavePost />} />
-
-        <Route path="/post/comment/:postId" element={<Comment />} />
-
+        <Route path="/" element={<HomePage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/forgot-password" element={<ForgetPasswordPage />} />
+        <Route
+          path="/change-password/:userId"
+          element={<ChangePasswordPage />}
+        />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/:userId" element={<FindUserProfilePage />} />
+        <Route path="/user/post/:userId" element={<FindUserPostPage />} />
+        <Route
+          path="/user/save-post/:userId"
+          element={<FindUserSavePostPage />}
+        />
+        <Route path="/edit-profile" element={<EditProfilePage />} />
+        <Route path="/upload-post" element={<UploadPost />} />
+        <Route path="/comment-post/:postId" element={<CommentPage />} />
         <Route path="/chat" element={<ChatPage />} />
-        <Route path="/chat/:userId" element={<ChatMessage />} />
-
-        <Route path="/story/user/:userId" element={<StoryShow />} />
-        <Route path="/story/upload" element={<UploadStory />} />
+        <Route path="/chat/:chatId" element={<ChatMessagePage />} />
+        <Route path="/create-group" element={<CreateGroupPage />} />
+        <Route path="/update-group/:chatId" element={<UpdateGroupChat />} />
+        <Route path="/chat-details/:chatId" element={<ChatDetails />} />
+        <Route path="/upload-story" element={<UploadStory />} />
+        <Route path="/story/:userId" element={<StoryPage />} />
       </Routes>
 
-      <BottomNav />
+      {path.includes(pathname) && <Footer />}
     </>
   );
 };

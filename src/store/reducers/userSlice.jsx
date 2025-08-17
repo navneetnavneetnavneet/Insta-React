@@ -3,29 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   isAuthenticated: false,
-  users: null,
-  chatUser: null,
-  onlineUsers: null,
+  allUser: [],
+  onlineUsers: [],
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    load: (state, actions) => {
-      state.user = actions.payload;
+    loadUser: (state, action) => {
+      state.user = action.payload;
       state.isAuthenticated = true;
     },
-    remove: (state, actions) => {
+    removeUser: (state, action) => {
       state.user = null;
       state.isAuthenticated = false;
-      state.chatUser = null;
     },
-    setUsers: (state, action) => {
-      state.users = action.payload;
-    },
-    setChatUser: (state, action) => {
-      state.chatUser = action.payload;
+    setAllUser: (state, action) => {
+      state.allUser = action.payload;
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;
@@ -33,6 +28,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { load, remove, setUsers, setChatUser, setOnlineUsers } =
+export const { loadUser, removeUser, setAllUser, setOnlineUsers } =
   userSlice.actions;
 export default userSlice.reducer;
