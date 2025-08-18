@@ -1,36 +1,25 @@
-import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { asyncSignInUser } from "../store/actions/userActions";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const submitHandler = async (data) => {
+    await dispatch(asyncSignInUser(data));
+    toast.success("User loggin successfully");
 
-    const { username, password } = formData;
-
-    if (!username || !password) {
-      return toast.warning("All fileds are required !");
-    }
-
-    if (password.length < 6) {
-      return toast.warning("Invalid password !");
-    }
-
-    if (password.length > 15) {
-      return toast.warning("Invalid password !");
-    }
-
-    await dispatch(asyncSignInUser({ username, password }));
+    reset();
   };
 
   return (
@@ -38,29 +27,53 @@ const SignInPage = () => {
       <div className="flex flex-col gap-5 items-center justify-center">
         <img className="w-1/2" src={logo} alt="" />
         <form
-          onSubmit={submitHandler}
+          onSubmit={handleSubmit(submitHandler)}
           className="w-full flex flex-col gap-3 font-normal tracking-tighter"
         >
-          <input
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
-            value={formData.username}
-            type="text"
-            placeholder="Username"
-            name="username"
-            className="w-full px-2 py-2 rounded-md outline-none border border-zinc-600 bg-transparent"
-          />
-          <input
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
-            value={formData.password}
-            type="password"
-            placeholder="Password"
-            name="password"
-            className="w-full px-2 py-2 rounded-md outline-none border border-zinc-600 bg-transparent"
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              className="w-full px-2 py-2 rounded-md outline-none border border-zinc-600 bg-transparent"
+              {...register("username", {
+                required: true,
+              })}
+            />
+            {errors && errors?.username?.type === "required" && (
+              <small className="text-sm md:text-xs font-medium text-red-500 tracking-tighter">
+                This field is required
+              </small>
+            )}
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              className="w-full px-2 py-2 rounded-md outline-none border border-zinc-600 bg-transparent"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                maxLength: 15,
+              })}
+            />
+            {errors && errors?.password?.type === "required" && (
+              <small className="text-sm md:text-xs font-medium text-red-500 tracking-tighter">
+                This field is required
+              </small>
+            )}
+            {errors && errors?.password?.type === "minLength" && (
+              <small className="text-sm md:text-xs font-medium text-red-500 tracking-tighter">
+                Password must be at least 6 characters
+              </small>
+            )}
+            {errors && errors?.password?.type === "maxLength" && (
+              <small className="text-sm md:text-xs font-medium text-red-500 tracking-tighter">
+                Password must be at most 15 characters
+              </small>
+            )}
+          </div>
           <Link
             to="/forgot-password"
             className="text-end -mt-2 text-base text-sky-600"
