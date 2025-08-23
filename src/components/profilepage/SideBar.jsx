@@ -9,7 +9,7 @@ const SideBar = ({ userId, setWidth, width }) => {
   return (
     <div
       style={{ width: `${width}%` }}
-      className="absolute top-0 right-0 z-[999] duration-500 h-screen bg-black"
+      className="absolute top-0 right-0 z-[999] duration-500 h-screen bg-black overflow-hidden"
     >
       <div className="flex items-center justify-between px-2 md:px-4 py-4 border-b border-zinc-200">
         <i

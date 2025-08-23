@@ -32,6 +32,7 @@ import FindUserPostPage from "../pages/FindUserPostPage";
 import FindUserSavePostPage from "../pages/FindUserSavePostPage";
 import ForgetPasswordPage from "../pages/ForgotPasswordPage";
 import ChangePasswordPage from "../pages/ChangePasswordPage";
+import PageNotFound from "../pages/PageNotFound";
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -89,6 +90,8 @@ const MainRoutes = () => {
         <Route path="/chat-details/:chatId" element={<ChatDetails />} />
         <Route path="/upload-story" element={<UploadStory />} />
         <Route path="/story/:userId" element={<StoryPage />} />
+
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
 
       {path.includes(pathname) && <Footer />}

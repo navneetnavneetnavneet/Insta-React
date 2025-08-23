@@ -133,7 +133,7 @@ const ChatPage = () => {
                     src={
                       !chat.isGroupChat
                         ? chatUser.profileImage.url
-                        : "https://framerusercontent.com/images/gMa1QTwfTREWorQeS8C1FpL4t8.webp?scale-down-to=1648"
+                        : chat.groupImage
                     }
                     alt=""
                   />

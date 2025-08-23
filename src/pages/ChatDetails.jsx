@@ -36,7 +36,7 @@ const ChatDetails = () => {
             src={
               !selectedChat.isGroupChat
                 ? oppsiteChatUser.profileImage.url
-                : "https://framerusercontent.com/images/gMa1QTwfTREWorQeS8C1FpL4t8.webp?scale-down-to=1648"
+                : selectedChat.groupImage
             }
             alt=""
           />
