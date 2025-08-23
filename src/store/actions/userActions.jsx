@@ -10,7 +10,19 @@ export const asyncLoadUser = () => async (dispatch, getState) => {
       await dispatch(loadUser(data));
     }
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response?.data);
+  }
+};
+
+export const asyncGoogleAuth = (token) => async (dispatch, getState) => {
+  try {
+    const { data, status } = await axios.post("/users/auth/google", { token });
+
+    if (data && (status === 200 || status === 201)) {
+      await dispatch(loadUser(data));
+    }
+  } catch (error) {
+    console.log(error?.response?.data);
   }
 };
 
@@ -139,7 +151,7 @@ export const asyncFetchAllUsers = () => async (dispatch, getState) => {
       await dispatch(setAllUser(data));
     }
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response?.data);
   }
 };
 

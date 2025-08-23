@@ -1,9 +1,10 @@
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { asyncSignInUser } from "../store/actions/userActions";
+import { asyncGoogleAuth, asyncSignInUser } from "../store/actions/userActions";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignInPage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,11 @@ const SignInPage = () => {
     toast.success("User loggin successfully");
 
     reset();
+  };
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    const token = credentialResponse.credential;
+    await dispatch(asyncGoogleAuth(token));
   };
 
   return (
@@ -90,8 +96,11 @@ const SignInPage = () => {
             Sign Up
           </Link>{" "}
         </p>
-        <button className="w-full tracking-tighter px-4 py-2 rounded-md border-none bg-sky-600 hover:bg-sky-700 duration-300 text-white">
-          Sign in with Google
+        <button className="w-full flex items-center justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={(error) => console.error(error)}
+          />
         </button>
       </div>
     </section>

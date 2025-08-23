@@ -14,7 +14,7 @@ const HomePage = () => {
     <section className="w-full">
       <TopNav />
       <div className="story w-full px-2 md:px-4 flex gap-5 overflow-x-auto overflow-y-hidden">
-        {user.stories.length === 0 && <Story user={user} />}
+        {user?.stories?.length === 0 && <Story user={user} />}
         {stories.length > 0 &&
           stories.map((story) => <Story key={story._id} user={story.user} />)}
       </div>

@@ -19,7 +19,7 @@ const Footer = () => {
         >
           <img
             className="w-full h-full object-cover"
-            src={user.profileImage.url}
+            src={user?.profileImage?.url}
             alt=""
           />
         </Link>
